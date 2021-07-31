@@ -1,16 +1,39 @@
-table {
-  width: 100%;
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
 
-  .mat-column-edit {
-    width: 15%;
+  table {
+    width: 100%;
+    max-width: 30rem;
+    border-spacing: 1rem;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 0.5rem;
+    }
+
+    .price {
+      text-align: right;
+    }
+
+    tr.totalRow td,
+    tr.tipRow td {
+      border-top: 1px solid grey;
+    }
+
+    .totalRow {
+      font-weight: bold;
+    }
   }
 
-  .mat-column-price,
-  .mat-column-tipAmount {
-    text-align: right;
-  }
-
-  .mat-footer-row:not(.tipRow) {
-    font-weight: bold;
+  .buttonWrapper {
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 }

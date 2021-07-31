@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SettingsService } from './../service/settings.service';
 
 export interface BillEntry {
   name: string;
@@ -20,15 +21,21 @@ const DATA_SOURCE: BillEntry[] = [
   styleUrls: ['./bill.component.scss'],
 })
 export class BillComponent implements OnInit {
-  readonly TIP_IN_PERCENT = 8;
+  tipInPercent: number;
   formGroup: FormGroup;
   entries: BillEntry[];
   total: number;
   tip = 0;
   displayedColumns = ['name', 'price', 'edit'];
   displayedColumnsForTipFooter = ['tip', 'tipAmount', 'calculateTip'];
+  currency: 'EUR' | 'USD';
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private settingsService: SettingsService
+  ) {
+    this.tipInPercent = this.settingsService.tipInPercent;
+    this.currency = this.settingsService.currency;
     this.entries = DATA_SOURCE;
     this.formGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([new FormControl()]),
@@ -43,6 +50,6 @@ export class BillComponent implements OnInit {
   ngOnInit(): void {}
 
   calculateTip(): void {
-    this.tip = this.total * (this.TIP_IN_PERCENT / 100);
+    this.tip = this.total * (this.tipInPercent / 100);
   }
 }

@@ -1,0 +1,26 @@
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="moreMenu"
+  aria-label="Button to open more settings"
+>
+  <mat-icon>menu</mat-icon>
+</button>
+<mat-menu #moreMenu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>fiber_new</mat-icon>
+    <span>Neue Rechnung</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>settings</mat-icon>
+    <span>Einstellungen</span>
+  </button>
+</mat-menu>
+
+<button
+  class="peopleIndicator"
+  mat-icon-button
+  aria-label="People"
+>
+  {{ numberOfPayers }}
+  <mat-icon>people</mat-icon>
+</button>

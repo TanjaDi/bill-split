@@ -1,90 +1,25 @@
-<table mat-table [dataSource]="entries">
-  <!-- Column: name -->
-  <ng-container matColumnDef="name">
-    <td mat-cell *matCellDef="let entry">
-      <ng-container *ngIf="!entry.isEditMode">
-        <mat-label>
-          {{ entry.name }}
-        </mat-label>
-      </ng-container>
-      <ng-container *ngIf="entry.isEditMode">
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input type="text" matInput [(ngModel)]="entry.name" />
-        </mat-form-field>
-      </ng-container>
-    </td>
-    <td mat-footer-cell *matFooterCellDef>Summe</td>
-  </ng-container>
-
-  <!-- Column: price -->
-  <ng-container matColumnDef="price">
-    <td mat-cell *matCellDef="let entry">
-      <ng-container *ngIf="!entry.isEditMode">
-        <mat-label> {{ entry.price | currency: "EUR" }} </mat-label>
-      </ng-container>
-      <ng-container *ngIf="entry.isEditMode">
-        <mat-form-field>
-          <mat-label>Price</mat-label>
-          <input type="number" matInput [(ngModel)]="entry.price" />
-          <span matSuffix>&nbsp;€</span>
-        </mat-form-field>
-      </ng-container>
-    </td>
-    <td mat-footer-cell *matFooterCellDef>
-      <mat-label>{{ total | currency: "EUR" }}</mat-label>
-    </td>
-  </ng-container>
-
-  <!-- Column: edit -->
-  <ng-container matColumnDef="edit">
-    <td mat-cell *matCellDef="let entry">
-      <ng-container *ngIf="!entry.isEditMode">
-        <div class="editButtonCell">
-          <button
-            mat-icon-button
-            color="primary"
-            (click)="entry.isEditMode = !entry.isEditMode"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="entry.isEditMode">
-        <div class="doneButtonCell">
-          <button
-            mat-button
-            color="primary"
-            (click)="entry.isEditMode = !entry.isEditMode"
-          >
-            Done
-          </button>
-        </div>
-      </ng-container>
-    </td>
-    <td mat-footer-cell *matFooterCellDef></td>
-  </ng-container>
-
-  <!-- Columns for tipFooter -->
-  <ng-container matColumnDef="tip">
-    <td mat-footer-cell *matFooterCellDef>Trinkgeld ({{ TIP_IN_PERCENT }}%)</td>
-  </ng-container>
-  <ng-container matColumnDef="tipAmount">
-    <td mat-footer-cell *matFooterCellDef>
-      <mat-label> {{ tip | currency: "EUR" }} </mat-label>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="calculateTip">
-    <td mat-footer-cell *matFooterCellDef></td>
-  </ng-container>
-
-  <!-- Row -->
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  <!-- Footer row -->
-  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-  <tr
-    mat-footer-row
-    class="tipRow"
-    *matFooterRowDef="displayedColumnsForTipFooter"
-  ></tr>
+<table>
+  <!-- data rows -->
+  <tr class="dataRow" *ngFor="let entry of entries">
+    <td class="name">{{ entry.name }}</td>
+    <td class="price">{{ entry.price | currency: currency }}</td>
+    <td class="payer"></td>
+  </tr>
+  <!-- Total -->
+  <tr class="totalRow">
+    <td class="name">Summe</td>
+    <td class="price total">{{ total | currency: currency }}</td>
+    <td class="payer"></td>
+  </tr>
+  <tr class="tipRow">
+    <td class="name">Trinkgeld ({{ tipInPercent }}%)</td>
+    <td class="price tip">{{ tip | currency: currency }}</td>
+    <td class="payer"></td>
+  </tr>
 </table>
+
+<div class="buttonWrapper">
+  <button class="addButton" mat-fab color="primary">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
