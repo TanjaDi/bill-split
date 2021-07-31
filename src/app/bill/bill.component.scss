@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+
+  .mat-column-edit {
+    width: 15%;
+  }
+
+  .mat-column-price,
+  .mat-column-tipAmount {
+    text-align: right;
+  }
+
+  .mat-footer-row:not(.tipRow) {
+    font-weight: bold;
+  }
+}
