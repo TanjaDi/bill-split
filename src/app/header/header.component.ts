@@ -14,4 +14,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.numberOfPayers = this.settingsService.numberOfPayers;
   }
+
+  toggleNumberOfPayers(): void {
+    if (this.numberOfPayers < this.settingsService.maxNumberOfPayers) {
+      this.numberOfPayers++;
+    } else {
+      this.numberOfPayers = 1;
+    }
+    this.settingsService.numberOfPayers = this.numberOfPayers;
+  }
 }

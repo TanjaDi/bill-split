@@ -1,10 +1,5 @@
 :host {
-  display: flex;
-  width: 100vw;
-  background-color: var(--bsplit-color-primary);
-  justify-content: space-between;
-
-  button {
-    margin: 0 0.5rem;
+  .spacer {
+    flex: 1 1 auto;
   }
 }

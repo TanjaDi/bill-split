@@ -1,18 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from './../service/settings.service';
+import {
+  PayerSelectionDialogComponent,
+  PayerSelectionDialogData,
+} from './payer-selection-dialog/payer-selection-dialog.component';
 
 export interface BillEntry {
   name: string;
   price: number;
+  payer: Payer;
   isEditMode: boolean;
 }
 
+export interface Payer {
+  payers: number[];
+}
+
 const DATA_SOURCE: BillEntry[] = [
-  { name: 'Cola zero', price: 3.3, isEditMode: false },
-  { name: 'Pizza Fungi', price: 10.5, isEditMode: false },
-  { name: 'Augustiner Helles', price: 4.5, isEditMode: false },
-  { name: 'Pizza Vegana', price: 11.5, isEditMode: false },
+  { name: 'Cola zero', price: 3.3, payer: { payers: [1] }, isEditMode: false },
+  {
+    name: 'Pizza Fungi',
+    price: 10.5,
+    payer: { payers: [1] },
+    isEditMode: false,
+  },
+  {
+    name: 'Augustiner Helles',
+    price: 4.5,
+    payer: { payers: [1] },
+    isEditMode: false,
+  },
+  {
+    name: 'Pizza Vegana',
+    price: 11.5,
+    payer: { payers: [1] },
+    isEditMode: false,
+  },
 ];
 
 @Component({
@@ -32,7 +57,8 @@ export class BillComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    public matDialog: MatDialog
   ) {
     this.tipInPercent = this.settingsService.tipInPercent;
     this.currency = this.settingsService.currency;
@@ -51,5 +77,35 @@ export class BillComponent implements OnInit {
 
   calculateTip(): void {
     this.tip = this.total * (this.tipInPercent / 100);
+  }
+
+  openPayerSelection(billEntry: BillEntry): void {
+    if (this.settingsService.numberOfPayers > 1) {
+      const data: PayerSelectionDialogData = {
+        payer: billEntry.payer,
+        numberOfPayers: this.settingsService.numberOfPayers,
+        entryName: billEntry.name,
+      };
+      const dialogRef = this.matDialog.open<
+        PayerSelectionDialogComponent,
+        PayerSelectionDialogData,
+        Payer
+      >(PayerSelectionDialogComponent, { data });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          billEntry.payer = result;
+        }
+      });
+    }
+  }
+
+  onClickAddEntry(): void {
+    this.entries.push({
+      name: 'Eintrag ' + (this.entries.length + 1),
+      price: 0,
+      isEditMode: true,
+      payer: { payers: [1] },
+    });
   }
 }

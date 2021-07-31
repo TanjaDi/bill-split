@@ -1,11 +1,19 @@
-<button
-  mat-icon-button
-  [matMenuTriggerFor]="moreMenu"
-  aria-label="Button to open more settings"
->
-  <mat-icon>menu</mat-icon>
-</button>
-<mat-menu #moreMenu="matMenu">
+<mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="appName">Bill split</span>
+  <span class="spacer"></span>
+  <button class="peopleIndicator" mat-icon-button aria-label="People" (click)="toggleNumberOfPayers()">
+    {{ numberOfPayers }}
+    <mat-icon>people</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Share">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
   <button mat-menu-item>
     <mat-icon>fiber_new</mat-icon>
     <span>Neue Rechnung</span>
@@ -15,12 +23,3 @@
     <span>Einstellungen</span>
   </button>
 </mat-menu>
-
-<button
-  class="peopleIndicator"
-  mat-icon-button
-  aria-label="People"
->
-  {{ numberOfPayers }}
-  <mat-icon>people</mat-icon>
-</button>
