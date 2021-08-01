@@ -6,8 +6,8 @@
     <button
       [class]="'person' + (index + 1)"
       mat-button
-      [class.selected]="isPayerSelected(index + 1)"
-      (click)="togglePayer(index + 1)"
+      [class.selected]="isPersonDebtor(index + 1)"
+      (click)="toggleDebtor(index + 1)"
     >
       {{ index + 1 }}
       <mat-icon>person</mat-icon>

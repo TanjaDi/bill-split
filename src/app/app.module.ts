@@ -1,3 +1,6 @@
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeEn from '@angular/common/locales/en';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,11 +15,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BillComponent } from './bill/bill.component';
+import { EditBillEntryDialogComponent } from './bill/edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 import { HeaderComponent } from './header/header.component';
-import { PayerSelectionDialogComponent } from './bill/payer-selection-dialog/payer-selection-dialog.component';
+import { DebtorSelectionDialogComponent } from './payer/payer-selection-dialog/debtor-selection-dialog.component';
+import { BillSplitDialogComponent } from './bill/bill-split-dialog/bill-split-dialog.component';
+
+registerLocaleData(localeDe);
+registerLocaleData(localeEn);
 
 @NgModule({
-  declarations: [AppComponent, BillComponent, HeaderComponent, PayerSelectionDialogComponent],
+  declarations: [
+    AppComponent,
+    BillComponent,
+    HeaderComponent,
+    DebtorSelectionDialogComponent,
+    EditBillEntryDialogComponent,
+    BillSplitDialogComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

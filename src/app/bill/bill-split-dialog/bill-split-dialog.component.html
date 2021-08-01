@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Rechnung aufteilen</h2>
+<mat-dialog-content class="mat-typography">
+  Wer bezahlt?
+  <div class="selectPayer">
+    <ng-container
+      *ngFor="let i of [].constructor(numberOfPayers); let index = index"
+    >
+      <button
+        [class]="'person' + (index + 1)"
+        mat-button
+        [class.selected]="payer === index + 1"
+        (click)="onClickPayer(index + 1)"
+      >
+        {{ index + 1 }}
+        <mat-icon>person</mat-icon>
+      </button>
+    </ng-container>
+  </div>
+  <div class="results">
+    <ng-container *ngFor="let debtor of debtors">
+      <ng-container *ngIf="debtor.personNumber !== payer">
+        <h3>
+          Rechnung für {{ debtor.personNumber }} <mat-icon>person</mat-icon>:
+        </h3>
+        <div class="billForOne">
+          <div class="entryForOne" *ngFor="let entry of debtor.entries">
+            <span>{{ entry.name }}:</span>
+            <span>{{
+              entry.splitPrice | currency: settingsService.currency
+            }}</span>
+          </div>
+          <div class="entryForOne">
+            <span>Trinkgeld:</span>
+            <span>{{ debtor.tip | currency: settingsService.currency }}</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="resultLine" *ngIf="debtor.personNumber !== payer">
+        {{ payer }} <mat-icon>person</mat-icon> bekommt von
+        {{ debtor.personNumber }} <mat-icon>person</mat-icon>
+        {{ debtor.amount | currency: settingsService.currency }} zurück.
+      </div>
+    </ng-container>
+  </div>
+</mat-dialog-content>

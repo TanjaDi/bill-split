@@ -4,17 +4,26 @@
   </button>
   <span class="appName">Bill split</span>
   <span class="spacer"></span>
-  <button class="peopleIndicator" mat-icon-button aria-label="People" (click)="toggleNumberOfPayers()">
+  <button
+    class="peopleIndicator"
+    mat-icon-button
+    aria-label="People"
+    (click)="toggleNumberOfPayers()"
+  >
     {{ numberOfPayers }}
-    <mat-icon>people</mat-icon>
+    <mat-icon>{{ numberOfPayers === 1 ? "person" : "people" }}</mat-icon>
   </button>
-  <button mat-icon-button aria-label="Share">
+  <button
+    mat-icon-button
+    color="secondary"
+    aria-label="Split bill"
+  >
     <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item (click)="onClickNewBill()">
     <mat-icon>fiber_new</mat-icon>
     <span>Neue Rechnung</span>
   </button>

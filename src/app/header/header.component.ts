@@ -23,4 +23,8 @@ export class HeaderComponent implements OnInit {
     }
     this.settingsService.numberOfPayers = this.numberOfPayers;
   }
+
+  onClickNewBill(): void {}
+
+  onClickSplitBill(): void {}
 }

@@ -1,8 +1,12 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  position: absolute;
+  top: 3.5rem;
+  bottom: 0;
+  height: calc(100% - 3.5rem);
   width: 100vw;
+  overflow-y: auto;
 
   .billWrapper {
     width: 100%;
@@ -16,18 +20,82 @@
         display: table-cell;
         padding: 0.75rem;
 
-        &.price {
+        &.price,
+        &.payer {
           text-align: right;
         }
+
+        &.payer {
+          &.color0 mat-icon {
+            color: var(--bsplit-color0);
+          }
+          &.color1 mat-icon {
+            color: var(--bsplit-color1);
+          }
+          &.color2 mat-icon {
+            color: var(--bsplit-color2);
+          }
+          &.color3 mat-icon {
+            color: var(--bsplit-color3);
+          }
+          &.color4 mat-icon {
+            color: var(--bsplit-color4);
+          }
+          &.color5 mat-icon {
+            color: var(--bsplit-color5);
+          }
+          &.color6 mat-icon {
+            color: var(--bsplit-color6);
+          }
+          &.color7 mat-icon {
+            color: var(--bsplit-color7);
+          }
+          &.color8 mat-icon {
+            color: var(--bsplit-color8);
+          }
+          &.color9 mat-icon {
+            color: var(--bsplit-color9);
+          }
+          &.color10 mat-icon {
+            color: var(--bsplit-color10);
+          }
+          &.color11 mat-icon {
+            color: var(--bsplit-color11);
+          }
+          &.color12 mat-icon {
+            color: var(--bsplit-color12);
+          }
+        }
+      }
+    }
+
+    .footerRowGroup {
+      display: table-row-group;
+
+      .emptyRow .tableCell,
+      .totalRow .tableCell,
+      .totalWithTipRow .tableCell {
+        position: sticky;
+        z-index: 1;
+        background-color: white;
       }
 
-      &.totalRow {
-        font-weight: bold;
+      .emptyRow .tableCell {
+        bottom: 5.5rem;
       }
 
-      &.totalRow .tableCell,
-      &.tipRow .tableCell {
+      .totalRow .tableCell {
+        bottom: 2.75rem;
+      }
+
+      .totalWithTipRow .tableCell {
+        bottom: 0;
+      }
+
+      .totalRow .tableCell,
+      .totalWithTipRow .tableCell {
         border-top: 1px solid grey;
+        font-weight: bold;
       }
     }
   }

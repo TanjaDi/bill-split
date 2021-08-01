@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>
+  {{ billEntry.price !== 0 ? "Ändere" : "Neuer" }} Eintrag
+</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput required type="text" [(ngModel)]="billEntry.name" />
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="priceFormField">
+    <mat-label>Preis</mat-label>
+    <input
+      matInput
+      min="0"
+      required
+      type="number"
+      [(ngModel)]="billEntry.price"
+    />
+    <span matSuffix>€</span>
+  </mat-form-field>
+</mat-dialog-content>

@@ -1,43 +1,71 @@
 <div class="billWrapper">
   <!-- data rows -->
   <div class="tableRow dataRow" *ngFor="let entry of entries">
-    <div class="tableCell name">{{ entry.name }}</div>
-    <div class="tableCell price">{{ entry.price | currency: currency }}</div>
-    <div class="tableCell payer">
+    <div class="tableCell name" (dblclick)="onDoubleClickEntry(entry)">
+      {{ entry.name }}
+    </div>
+    <div class="tableCell price" (dblclick)="onDoubleClickEntry(entry)">
+      {{ entry.price | currency: entry.currency }}
+    </div>
+    <div
+      [class]="
+        'tableCell payer ' + entry.debtors.getCurrentPayersColorList().join(' ')
+      "
+    >
       <button
         class="peopleIndicator"
         mat-icon-button
         aria-label="People"
-        (click)="openPayerSelection(entry)"
+        (click)="openDebtorsSelection(entry)"
       >
-        {{ entry.payer.payers.length === 1 ? entry.payer.payers[0]: entry.payer.payers.join('|') }}
-        <mat-icon>people</mat-icon>
+        {{ entry.debtors.getDebtors().join(",") }}
+        <mat-icon>{{
+          entry.debtors.isSingleDebtor() ? "person" : "people"
+        }}</mat-icon>
       </button>
     </div>
   </div>
-  <div class="tableRow emptyRow">
-    <div class="tableCell">
-      <button
-        class="addButton"
-        mat-mini-fab
-        color="primary"
-        (click)="onClickAddEntry()"
-      >
-        <mat-icon>add</mat-icon>
-      </button>
+  <!-- Buttons -->
+  <div class="footerRowGroup">
+    <div class="tableRow emptyRow">
+      <div class="tableCell">
+        <button
+          class="addButton"
+          mat-flat-button
+          color="primary"
+          (click)="onClickAddEntry()"
+        >
+          <mat-icon>add</mat-icon>
+          Neu
+        </button>
+      </div>
+      <div class="tableCell"></div>
+      <div class="tableCell payer">
+        <button
+          class="splitButton"
+          mat-flat-button
+          color="primary"
+          (click)="onClickSplitBill()"
+        >
+          <mat-icon>attach_money</mat-icon>
+        </button>
+      </div>
     </div>
-    <div class="tableCell"></div>
-    <div class="tableCell"></div>
-  </div>
-  <!-- Total -->
-  <div class="tableRow totalRow">
-    <div class="tableCell name">Summe</div>
-    <div class="tableCell price total">{{ total | currency: currency }}</div>
-    <div class="tableCell payer"></div>
-  </div>
-  <div class="tableRow tipRow">
-    <div class="tableCell name">Trinkgeld ({{ tipInPercent }}%)</div>
-    <div class="tableCell price tip">{{ tip | currency: currency }}</div>
-    <div class="tableCell payer"></div>
+    <!-- Total -->
+    <div class="tableRow totalRow">
+      <div class="tableCell name">Summe</div>
+      <div class="tableCell price total">{{ total | currency: currency }}</div>
+      <div class="tableCell payer"></div>
+    </div>
+    <!-- Tip -->
+    <div class="tableRow totalWithTipRow">
+      <div class="tableCell name">
+        inkl. Trinkgeld ({{ tipInPercent }}% = {{ roundedTip | currency: currency }})
+      </div>
+      <div class="tableCell price tip">
+        {{ total + roundedTip | currency: currency }}
+      </div>
+      <div class="tableCell payer"></div>
+    </div>
   </div>
 </div>
