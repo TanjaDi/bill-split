@@ -14,7 +14,7 @@
     >
       <button
         class="peopleIndicator"
-        mat-icon-button
+        mat-button
         aria-label="People"
         (click)="openDebtorsSelection(entry)"
       >
@@ -44,10 +44,10 @@
         <button
           class="splitButton"
           mat-flat-button
-          color="primary"
+          color="accent"
           (click)="onClickSplitBill()"
         >
-          <mat-icon>attach_money</mat-icon>
+          <mat-icon>call_split</mat-icon>
         </button>
       </div>
     </div>
@@ -60,7 +60,8 @@
     <!-- Tip -->
     <div class="tableRow totalWithTipRow">
       <div class="tableCell name">
-        inkl. Trinkgeld ({{ tipInPercent }}% = {{ roundedTip | currency: currency }})
+        mit Trinkgeld ({{ tipInPercent }}% =
+        {{ roundedTip | currency: currency }})
       </div>
       <div class="tableCell price tip">
         {{ total + roundedTip | currency: currency }}

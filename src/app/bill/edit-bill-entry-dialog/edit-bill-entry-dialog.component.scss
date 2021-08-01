@@ -1,6 +1,7 @@
 mat-dialog-content {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 
   .priceFormField {
     width: 7rem;

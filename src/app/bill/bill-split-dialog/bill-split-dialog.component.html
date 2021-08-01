@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Rechnung aufteilen</h2>
 <mat-dialog-content class="mat-typography">
-  Wer bezahlt?
+  <h3>Wer bezahlt?</h3>
   <div class="selectPayer">
     <ng-container
       *ngFor="let i of [].constructor(numberOfPayers); let index = index"
@@ -19,28 +19,27 @@
   <div class="results">
     <ng-container *ngFor="let debtor of debtors">
       <ng-container *ngIf="debtor.personNumber !== payer">
-        <h3>
-          Rechnung für {{ debtor.personNumber }} <mat-icon>person</mat-icon>:
-        </h3>
         <div class="billForOne">
+          <h3>
+            Rechnung für {{ debtor.personNumber }} <mat-icon>person</mat-icon>:
+          </h3>
           <div class="entryForOne" *ngFor="let entry of debtor.entries">
-            <span>{{ entry.name }}:</span>
+            <span>{{ entry.name }}</span>
             <span>{{
               entry.splitPrice | currency: settingsService.currency
             }}</span>
           </div>
           <div class="entryForOne">
-            <span>Trinkgeld:</span>
+            <span>Trinkgeld</span>
             <span>{{ debtor.tip | currency: settingsService.currency }}</span>
           </div>
+          <h4 class="summaryForOne" *ngIf="debtor.personNumber !== payer">
+            {{ payer }} <mat-icon>person</mat-icon> bekommt von
+            {{ debtor.personNumber }} <mat-icon>person</mat-icon>
+            {{ debtor.amount | currency: settingsService.currency }} zurück.
+          </h4>
         </div>
       </ng-container>
-
-      <div class="resultLine" *ngIf="debtor.personNumber !== payer">
-        {{ payer }} <mat-icon>person</mat-icon> bekommt von
-        {{ debtor.personNumber }} <mat-icon>person</mat-icon>
-        {{ debtor.amount | currency: settingsService.currency }} zurück.
-      </div>
     </ng-container>
   </div>
 </mat-dialog-content>

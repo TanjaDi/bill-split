@@ -10,7 +10,6 @@
 
   .billWrapper {
     width: 100%;
-    max-width: 30rem;
     display: table;
 
     .tableRow {
@@ -19,6 +18,7 @@
       .tableCell {
         display: table-cell;
         padding: 0.75rem;
+        vertical-align: middle;
 
         &.price,
         &.payer {
