@@ -2,19 +2,54 @@
   {{ billEntry.price !== 0 ? "Ändere" : "Neuer" }} Eintrag
 </h2>
 <mat-dialog-content class="mat-typography">
-  <mat-form-field appearance="fill">
-    <mat-label>Name</mat-label>
-    <input matInput required type="text" [(ngModel)]="billEntry.name" />
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="priceFormField">
-    <mat-label>Preis</mat-label>
-    <input
-      matInput
-      min="0"
-      required
-      type="number"
-      [(ngModel)]="billEntry.price"
-    />
-    <span matSuffix>€</span>
-  </mat-form-field>
+  <div class="inputWrapper">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput required type="text" [(ngModel)]="billEntry.name" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="priceFormField">
+      <mat-label>Preis</mat-label>
+      <input
+        matInput
+        min="0"
+        required
+        type="number"
+        [(ngModel)]="billEntry.price"
+      />
+      <span matSuffix>€</span>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <h3>Wer zahlt?</h3>
+    <div class="debtorSelection">
+      <ng-container
+        *ngFor="let i of [].constructor(numberOfPayers); let index = index"
+      >
+        <button
+          [class]="'person' + (index + 1)"
+          mat-button
+          [class.selected]="isPersonDebtor(index + 1)"
+          (click)="toggleDebtor(index + 1)"
+        >
+          {{ index + 1 }}
+          <mat-icon>person</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+  </div>
 </mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null">
+    <mat-icon>delete</mat-icon>
+    Löschen
+  </button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="billEntry"
+    cdkFocusInitial
+  >
+    OK
+  </button>
+</mat-dialog-actions>

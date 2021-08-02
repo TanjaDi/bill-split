@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 import { BillEntry } from '../model/billl-entry.model';
+import { DebtorGroup } from '../model/debtor-group.model';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
@@ -22,10 +24,27 @@ export class BillService {
     return this.bill$;
   }
 
+  createNewBillEntry(currency: 'EUR' | 'USD'): BillEntry {
+    return {
+      id: uuidv4(),
+      name: 'Eintrag ' + (this.getBill().length + 1),
+      price: 0,
+      currency: currency,
+      debtors: new DebtorGroup([1]),
+    };
+  }
+
   addBillEntry(newEntry: BillEntry): void {
     const bill = this.bill$.getValue();
     bill.push(newEntry);
-    this.bill$.next(bill);
+    this.saveBill(bill);
+  }
+
+  removeBillEntry(billEntryId: string) {
+    const bill = this.getBill();
+    const indexToRemove = bill.findIndex((iEntry) => iEntry.id === billEntryId);
+    bill.splice(indexToRemove, 1);
+    this.saveBill(bill);
   }
 
   saveBill(bill: BillEntry[]): void {

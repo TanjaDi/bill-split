@@ -14,11 +14,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BillSplitDialogComponent } from './bill/bill-split-dialog/bill-split-dialog.component';
 import { BillComponent } from './bill/bill.component';
+import { DebtorSelectionDialogComponent } from './bill/debtor-selection-dialog/debtor-selection-dialog.component';
 import { EditBillEntryDialogComponent } from './bill/edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 import { HeaderComponent } from './header/header.component';
-import { DebtorSelectionDialogComponent } from './payer/payer-selection-dialog/debtor-selection-dialog.component';
-import { BillSplitDialogComponent } from './bill/bill-split-dialog/bill-split-dialog.component';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEn);

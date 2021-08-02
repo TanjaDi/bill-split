@@ -8,14 +8,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { BillEntry } from '../model/billl-entry.model';
 import { DebtorGroup } from '../model/debtor-group.model';
-import {
-  DebtorSelectionDialogComponent as DebtorsSelectionDialogComponent,
-  DebtorSelectionDialogData as DebtorsSelectionDialogData,
-} from '../payer/payer-selection-dialog/debtor-selection-dialog.component';
 import { BillService } from './../service/bill.service';
 import { SettingsService } from './../service/settings.service';
 import { BillSplitDialogComponent } from './bill-split-dialog/bill-split-dialog.component';
 import { CalculateService } from './calculate.service';
+import {
+  DebtorSelectionDialogComponent as DebtorsSelectionDialogComponent,
+  DebtorSelectionDialogData as DebtorsSelectionDialogData,
+} from './debtor-selection-dialog/debtor-selection-dialog.component';
 import { EditBillEntryDialogComponent } from './edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 
 @Component({
@@ -85,14 +85,7 @@ export class BillComponent implements OnInit {
   }
 
   onClickAddEntry(): void {
-    const newEntry: BillEntry = {
-      name: 'Eintrag ' + (this.billService.getBill().length + 1),
-      price: 0,
-      currency: this.currency,
-      debtors: new DebtorGroup([1]),
-    };
-    this.billService.addBillEntry(newEntry);
-    this.openEditDialog(newEntry);
+    this.openEditDialog(null);
   }
 
   onDoubleClickEntry(billEntry: BillEntry): void {
@@ -112,16 +105,25 @@ export class BillComponent implements OnInit {
     });
   }
 
-  private openEditDialog(billEntry: BillEntry): void {
+  private openEditDialog(billEntryToEdit: BillEntry | null): void {
     const dialogRef = this.matDialog.open<
       EditBillEntryDialogComponent,
-      BillEntry,
-      BillEntry
-    >(EditBillEntryDialogComponent, { data: billEntry });
+      BillEntry | null,
+      BillEntry | null
+    >(EditBillEntryDialogComponent, { data: billEntryToEdit });
 
-    dialogRef.afterClosed().subscribe((_result) => {
-      const bill = this.billService.getBill();
-      this.billService.saveBill(bill);
+    dialogRef.afterClosed().subscribe((updatedBill) => {
+      if (updatedBill === null && billEntryToEdit !== null) {
+        // delete existing
+        this.billService.removeBillEntry(billEntryToEdit.id);
+      } else if (updatedBill != null && billEntryToEdit === null) {
+        // add new
+        this.billService.addBillEntry(updatedBill);
+      } else {
+        // update
+        const bill = this.billService.getBill();
+        this.billService.saveBill(bill);
+      }
       this.changeDetectorRef.markForCheck();
     });
   }
