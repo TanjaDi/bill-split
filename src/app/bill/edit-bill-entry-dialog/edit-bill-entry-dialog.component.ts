@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BillEntry } from 'src/app/model/billl-entry.model';
-import { DebtorGroup } from 'src/app/model/debtor-group.model';
+import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { SettingsService } from './../../service/settings.service';
 
@@ -21,7 +21,7 @@ export class EditBillEntryDialogComponent implements OnInit {
   billEntry: BillEntry;
   currencySymbol: string;
   numberOfPayers: number;
-  debtors: DebtorGroup;
+  debtors: PersonGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: BillEntry | null,
@@ -46,11 +46,11 @@ export class EditBillEntryDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleDebtor(personNumber: number): void {
-    this.debtors.toggleDebtor(personNumber);
+  toggleSelected(personNumber: number): void {
+    this.debtors.toggleSelected(personNumber);
   }
 
-  isPersonDebtor(personNumber: number): boolean {
-    return this.debtors.isPersonDebtor(personNumber);
+  isPersonSelected(personNumber: number): boolean {
+    return this.debtors.isPersonSelected(personNumber);
   }
 }

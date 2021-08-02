@@ -3,14 +3,11 @@
   <ng-container
     *ngFor="let i of [].constructor(numberOfPayers); let index = index"
   >
-    <button
-      [class]="'person' + (index + 1)"
-      mat-button
-      [class.selected]="isPersonDebtor(index + 1)"
-      (click)="toggleDebtor(index + 1)"
+    <bsplit-people
+      [peopleIds]="[index + 1]"
+      [selected]="isPersonSelected(index + 1)"
+      (clickButton)="toggleSelected(index + 1)"
     >
-      {{ index + 1 }}
-      <mat-icon>person</mat-icon>
-    </button>
+    </bsplit-people>
   </ng-container>
 </mat-dialog-content>

@@ -5,11 +5,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DebtorGroup } from '../../model/debtor-group.model';
+import { PersonGroup } from '../../model/person-group.model';
 
 export interface DebtorSelectionDialogData {
   entryName: string;
-  debtors: DebtorGroup;
+  debtors: PersonGroup;
   numberOfPayers: number;
 }
 
@@ -22,21 +22,21 @@ export interface DebtorSelectionDialogData {
 export class DebtorSelectionDialogComponent implements OnInit {
   entryName: string;
   numberOfPayers: number;
-  debtors: DebtorGroup;
+  personGroup: PersonGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DebtorSelectionDialogData) {
     this.entryName = data.entryName;
     this.numberOfPayers = data.numberOfPayers;
-    this.debtors = data.debtors;
+    this.personGroup = data.debtors;
   }
 
   ngOnInit(): void {}
 
-  toggleDebtor(personNumber: number): void {
-    this.debtors.toggleDebtor(personNumber);
+  toggleSelected(personNumber: number): void {
+    this.personGroup.toggleSelected(personNumber);
   }
 
-  isPersonDebtor(personNumber: number): boolean {
-    return this.debtors.isPersonDebtor(personNumber);
+  isPersonSelected(personNumber: number): boolean {
+    return this.personGroup.isPersonSelected(personNumber);
   }
 }

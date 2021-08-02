@@ -19,6 +19,7 @@ import { BillComponent } from './bill/bill.component';
 import { DebtorSelectionDialogComponent } from './bill/debtor-selection-dialog/debtor-selection-dialog.component';
 import { EditBillEntryDialogComponent } from './bill/edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 import { HeaderComponent } from './header/header.component';
+import { PeopleComponent } from './people/people.component';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEn);
@@ -31,6 +32,7 @@ registerLocaleData(localeEn);
     DebtorSelectionDialogComponent,
     EditBillEntryDialogComponent,
     BillSplitDialogComponent,
+    PeopleComponent,
   ],
   imports: [
     BrowserModule,

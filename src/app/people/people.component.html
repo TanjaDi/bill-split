@@ -1,0 +1,12 @@
+<div [class]="'person ' + personGroup.getPersonColors().join(' ')">
+  <button
+    class="peopleIndicator"
+    [class.selected]="selected"
+    mat-button
+    aria-label="People"
+    (click)="onClickButton()"
+  >
+    {{ peopleIds.join(",") }}
+    <mat-icon>{{ personGroup.isOne() ? "person" : "people" }}</mat-icon>
+  </button>
+</div>

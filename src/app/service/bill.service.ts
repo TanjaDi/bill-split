@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { BillEntry } from '../model/billl-entry.model';
-import { DebtorGroup } from '../model/debtor-group.model';
+import { PersonGroup } from '../model/person-group.model';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class BillService {
       name: 'Eintrag ' + (this.getBill().length + 1),
       price: 0,
       currency: currency,
-      debtors: new DebtorGroup([1]),
+      debtors: new PersonGroup([1]),
     };
   }
 

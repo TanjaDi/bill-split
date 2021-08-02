@@ -21,50 +21,9 @@
         vertical-align: middle;
 
         &.price,
-        &.payer {
+        &.debtor,
+        &.splitButtonCell {
           text-align: right;
-        }
-
-        &.payer {
-          &.color0 mat-icon {
-            color: var(--bsplit-color0);
-          }
-          &.color1 mat-icon {
-            color: var(--bsplit-color1);
-          }
-          &.color2 mat-icon {
-            color: var(--bsplit-color2);
-          }
-          &.color3 mat-icon {
-            color: var(--bsplit-color3);
-          }
-          &.color4 mat-icon {
-            color: var(--bsplit-color4);
-          }
-          &.color5 mat-icon {
-            color: var(--bsplit-color5);
-          }
-          &.color6 mat-icon {
-            color: var(--bsplit-color6);
-          }
-          &.color7 mat-icon {
-            color: var(--bsplit-color7);
-          }
-          &.color8 mat-icon {
-            color: var(--bsplit-color8);
-          }
-          &.color9 mat-icon {
-            color: var(--bsplit-color9);
-          }
-          &.color10 mat-icon {
-            color: var(--bsplit-color10);
-          }
-          &.color11 mat-icon {
-            color: var(--bsplit-color11);
-          }
-          &.color12 mat-icon {
-            color: var(--bsplit-color12);
-          }
         }
       }
     }

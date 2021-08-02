@@ -7,7 +7,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { BillEntry } from '../model/billl-entry.model';
-import { DebtorGroup } from '../model/debtor-group.model';
+import { PersonGroup } from '../model/person-group.model';
 import { BillService } from './../service/bill.service';
 import { SettingsService } from './../service/settings.service';
 import { BillSplitDialogComponent } from './bill-split-dialog/bill-split-dialog.component';
@@ -54,7 +54,7 @@ export class BillComponent implements OnInit {
 
   private onChangeBill(newBill: BillEntry[]) {
     newBill.forEach((entry) => {
-      entry.debtors = new DebtorGroup(entry.debtors.personNumbers);
+      entry.debtors = new PersonGroup(entry.debtors.personNumbers);
     });
     this.currency =
       newBill.find((a) => a)?.currency || this.settingsService.currency;
@@ -73,7 +73,7 @@ export class BillComponent implements OnInit {
     const dialogRef = this.matDialog.open<
       DebtorsSelectionDialogComponent,
       DebtorsSelectionDialogData,
-      DebtorGroup
+      PersonGroup
     >(DebtorsSelectionDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((result) => {

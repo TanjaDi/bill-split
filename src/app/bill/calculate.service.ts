@@ -52,7 +52,7 @@ export class CalculateService {
 
   private calculateDebtors(billEntries: BillEntry[]): Debtor[] {
     return billEntries.reduce((result, entry) => {
-      const debtors = entry.debtors.getDebtors();
+      const debtors = entry.debtors.getPersonIds();
       const splitEqualAmount = entry.price / debtors.length;
       debtors.forEach((debtorNumber) => {
         const debtorEntry = result.find(

@@ -5,15 +5,12 @@
     <ng-container
       *ngFor="let i of [].constructor(numberOfPayers); let index = index"
     >
-      <button
-        [class]="'person' + (index + 1)"
-        mat-button
-        [class.selected]="payer === index + 1"
-        (click)="onClickPayer(index + 1)"
+      <bsplit-people
+        [peopleIds]="[index + 1]"
+        [selected]="payer === index + 1"
+        (clickButton)="onClickPayer(index + 1)"
       >
-        {{ index + 1 }}
-        <mat-icon>person</mat-icon>
-      </button>
+      </bsplit-people>
     </ng-container>
   </div>
   <div class="results">
@@ -21,7 +18,8 @@
       <ng-container *ngIf="debtor.personNumber !== payer">
         <div class="billForOne">
           <h3>
-            Rechnung für {{ debtor.personNumber }} <mat-icon>person</mat-icon>:
+            Rechnung für
+            <bsplit-people [peopleIds]="[debtor.personNumber]"> </bsplit-people>
           </h3>
           <div class="entryForOne" *ngFor="let entry of debtor.entries">
             <span>{{ entry.name }}</span>
@@ -34,8 +32,8 @@
             <span>{{ debtor.tip | currency: settingsService.currency }}</span>
           </div>
           <h4 class="summaryForOne" *ngIf="debtor.personNumber !== payer">
-            {{ payer }} <mat-icon>person</mat-icon> bekommt von
-            {{ debtor.personNumber }} <mat-icon>person</mat-icon>
+            <bsplit-people [peopleIds]="[payer]"></bsplit-people> bekommt von
+            <bsplit-people [peopleIds]="[debtor.personNumber]"></bsplit-people>
             {{ debtor.amount | currency: settingsService.currency }} zurück.
           </h4>
         </div>

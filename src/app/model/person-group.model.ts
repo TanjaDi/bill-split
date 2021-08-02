@@ -1,25 +1,25 @@
-export class DebtorGroup {
+export class PersonGroup {
   personNumbers: number[];
 
   constructor(personNumbers: number[]) {
     this.personNumbers = personNumbers;
   }
 
-  getDebtors(): number[] {
+  getPersonIds(): number[] {
     return this.personNumbers;
   }
 
-  getCurrentPayersColorList(): string[] {
-    return this.isSingleDebtor()
+  getPersonColors(): string[] {
+    return this.isOne()
       ? this.personNumbers.map((personNumber) => 'color' + (personNumber - 1))
       : [];
   }
 
-  isSingleDebtor(): boolean {
+  isOne(): boolean {
     return this.personNumbers.length === 1;
   }
 
-  isPersonDebtor(personNumber: number): boolean {
+  isPersonSelected(personNumber: number): boolean {
     const foundIndex = this.personNumbers.findIndex(
       (iDebtor) => iDebtor === personNumber
     );
@@ -29,13 +29,13 @@ export class DebtorGroup {
     return false;
   }
 
-  toggleDebtor(personNumber: number): void {
+  toggleSelected(personNumber: number): void {
     const foundIndex = this.personNumbers.findIndex(
       (iPerson) => iPerson === personNumber
     );
     if (foundIndex > -1) {
-      if (this.isSingleDebtor() === false) {
-        // only allow deselection if there is more than one payer left
+      if (this.isOne() === false) {
+        // only allow deselection if there is more than one debtor left
         this.personNumbers.splice(foundIndex, 1);
       }
     } else {
