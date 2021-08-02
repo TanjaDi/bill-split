@@ -1,4 +1,6 @@
+import { BillService } from './../service/bill.service';
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from './../service/local-storage.service';
 import { SettingsService } from './../service/settings.service';
 
 @Component({
@@ -9,7 +11,10 @@ import { SettingsService } from './../service/settings.service';
 export class HeaderComponent implements OnInit {
   numberOfPayers = 2;
 
-  constructor(private settingsService: SettingsService) {}
+  constructor(
+    private settingsService: SettingsService,
+    private billService: BillService
+  ) {}
 
   ngOnInit(): void {
     this.numberOfPayers = this.settingsService.numberOfPayers;
@@ -24,7 +29,9 @@ export class HeaderComponent implements OnInit {
     this.settingsService.numberOfPayers = this.numberOfPayers;
   }
 
-  onClickNewBill(): void {}
+  onClickNewBill(): void {
+    this.billService.clearBill();
+  }
 
   onClickSplitBill(): void {}
 }

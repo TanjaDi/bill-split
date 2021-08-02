@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DebtorGroup } from '../debtor-group.model';
+import { DebtorGroup } from '../../model/debtor-group.model';
 
 export interface DebtorSelectionDialogData {
   entryName: string;

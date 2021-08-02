@@ -16,4 +16,8 @@ export class LocalStorageService {
   setItem(key: string, value: string): void {
     localStorage.setItem(LocalStorageService.PREFIX + key, value);
   }
+
+  removeItem(key: string): void {
+    localStorage.removeItem(LocalStorageService.PREFIX + key);
+  }
 }

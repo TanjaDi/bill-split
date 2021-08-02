@@ -5,16 +5,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BillEntry } from 'src/app/model/billl-entry.model';
+import { Debtor } from 'src/app/model/debtor.model';
 import { SettingsService } from 'src/app/service/settings.service';
-import { BillEntry } from '../bill.component';
 import { CalculateService } from './../calculate.service';
-
-export interface Debtor {
-  personNumber: number;
-  amount: number;
-  tip: number;
-  entries: { name: string; splitPrice: number }[];
-}
 
 @Component({
   selector: 'app-bill-split-dialog',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { BillEntry } from '../model/billl-entry.model';
+import { Debtor } from '../model/debtor.model';
 import { SettingsService } from './../service/settings.service';
-import { Debtor } from './bill-split-dialog/bill-split-dialog.component';
-import { BillEntry } from './bill.component';
 
 @Injectable({
   providedIn: 'root',

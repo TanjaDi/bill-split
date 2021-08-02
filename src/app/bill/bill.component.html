@@ -1,6 +1,6 @@
 <div class="billWrapper">
   <!-- data rows -->
-  <div class="tableRow dataRow" *ngFor="let entry of entries">
+  <div class="tableRow dataRow" *ngFor="let entry of bill$ | async">
     <div class="tableCell name" (dblclick)="onDoubleClickEntry(entry)">
       {{ entry.name }}
     </div>

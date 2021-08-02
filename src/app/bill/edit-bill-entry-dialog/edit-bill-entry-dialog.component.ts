@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BillEntry } from 'src/app/model/billl-entry.model';
 import { SettingsService } from './../../service/settings.service';
-import { BillEntry } from './../bill.component';
 
 @Component({
   selector: 'app-edit-bill-entry-dialog',
