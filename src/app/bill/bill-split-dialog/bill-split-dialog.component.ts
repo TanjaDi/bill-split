@@ -10,6 +10,11 @@ import { Debtor } from 'src/app/model/debtor.model';
 import { SettingsService } from 'src/app/service/settings.service';
 import { CalculateService } from './../calculate.service';
 
+export interface BillSplitDialogData {
+  billEntries: BillEntry[];
+  manuallyEditedTip: null | number;
+}
+
 @Component({
   selector: 'app-bill-split-dialog',
   templateUrl: './bill-split-dialog.component.html',
@@ -21,17 +26,19 @@ export class BillSplitDialogComponent implements OnInit {
   numberOfPayers: number;
   payer: number;
   debtors: Debtor[] = [];
+  manuallyEditedTip: number | null;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: BillEntry[],
+    @Inject(MAT_DIALOG_DATA) data: BillSplitDialogData,
     public settingsService: SettingsService,
     private calculateService: CalculateService
   ) {
-    this.billEntries = data;
+    this.billEntries = data.billEntries;
+    this.manuallyEditedTip = data.manuallyEditedTip;
     this.payer = 1;
     this.numberOfPayers = this.settingsService.numberOfPayers;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
-      this.billEntries
+      this.billEntries, this.manuallyEditedTip
     );
   }
 
@@ -40,7 +47,8 @@ export class BillSplitDialogComponent implements OnInit {
   onClickPayer(payerNumber: number): void {
     this.payer = payerNumber;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
-      this.billEntries
+      this.billEntries,
+      this.manuallyEditedTip
     );
   }
 }

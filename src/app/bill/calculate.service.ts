@@ -28,24 +28,30 @@ export class CalculateService {
       }, 0);
   }
 
-  calculateDebtorsForPayer(billEntries: BillEntry[]): Debtor[] {
-    const total = this.calculateTotal(billEntries);
-    const tip = this.calculateRoundedTip(total);
+  calculateDebtorsForPayer(
+    billEntries: BillEntry[],
+    manuallyEditedTip: number | null
+  ): Debtor[] {
+    const totalWithoutTip = this.calculateTotal(billEntries);
+    const tip =
+      manuallyEditedTip === null
+        ? this.calculateRoundedTip(totalWithoutTip)
+        : manuallyEditedTip;
     const debtors = this.calculateDebtors(billEntries);
-    this.addTipProcentual(debtors, tip, total);
+    this.addTipProcentual(debtors, tip, totalWithoutTip);
     return debtors;
   }
 
   private addTipProcentual(
     debtors: Debtor[],
     tip: number,
-    total: number
+    totalWithoutTip: number
   ): Debtor[] {
     return debtors.map((debtor) => {
-      const percentage = debtor.amount / total;
-      const tipPercentage = percentage * tip;
-      debtor.amount += tipPercentage;
-      debtor.tip = tipPercentage;
+      const percentage = debtor.amount / totalWithoutTip;
+      const tipForThisTotal = percentage * tip;
+      debtor.amount += tipForThisTotal;
+      debtor.tip = tipForThisTotal;
       return debtor;
     });
   }

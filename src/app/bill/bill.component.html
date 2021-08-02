@@ -8,7 +8,7 @@
       {{ entry.price | currency: entry.currency }}
     </div>
     <bsplit-people
-      class="tableCell debtor"
+      class="tableCell lastCell"
       [peopleIds]="entry.debtors.getPersonIds()"
       (clickButton)="openDebtorsSelection(entry)"
     ></bsplit-people>
@@ -28,7 +28,7 @@
         </button>
       </div>
       <div class="tableCell"></div>
-      <div class="tableCell splitButtonCell">
+      <div class="tableCell lastCell">
         <button
           class="splitButton"
           mat-flat-button
@@ -43,18 +43,37 @@
     <div class="tableRow totalRow">
       <div class="tableCell name">Summe</div>
       <div class="tableCell price total">{{ total | currency: currency }}</div>
-      <div class="tableCell payer"></div>
+      <div class="tableCell lastCell"></div>
     </div>
     <!-- Tip -->
     <div class="tableRow totalWithTipRow">
       <div class="tableCell name">
-        mit Trinkgeld ({{ tipInPercent }}% =
-        {{ roundedTip | currency: currency }})
+        mit Trinkgeld
+        <span *ngIf="manuallyEditedTip === null"
+          >{{ tipInPercent }}% = {{ roundedTip | currency: currency }}
+        </span>
+        <span *ngIf="manuallyEditedTip !== null"
+          >{{ manuallyEditedTip | currency: currency }}
+        </span>
       </div>
       <div class="tableCell price tip">
-        {{ total + roundedTip | currency: currency }}
+        {{
+          (manuallyEditedTip === null
+            ? total + roundedTip
+            : total + manuallyEditedTip
+          ) | currency: currency
+        }}
       </div>
-      <div class="tableCell payer"></div>
+      <div class="tableCell lastCell">
+        <button
+          class="splitButton"
+          mat-flat-button
+          color="primary"
+          (click)="onClickEditTip()"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

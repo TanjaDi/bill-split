@@ -8,9 +8,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { BillEntry } from '../model/billl-entry.model';
 import { PersonGroup } from '../model/person-group.model';
+import { EditTipDialogComponent } from './../edit-tip-dialog/edit-tip-dialog.component';
 import { BillService } from './../service/bill.service';
 import { SettingsService } from './../service/settings.service';
-import { BillSplitDialogComponent } from './bill-split-dialog/bill-split-dialog.component';
+import {
+  BillSplitDialogComponent,
+  BillSplitDialogData,
+} from './bill-split-dialog/bill-split-dialog.component';
 import { CalculateService } from './calculate.service';
 import {
   DebtorSelectionDialogComponent as DebtorsSelectionDialogComponent,
@@ -29,6 +33,7 @@ export class BillComponent implements OnInit {
   bill$: Observable<BillEntry[]>;
   total = 0;
   roundedTip = 0;
+  manuallyEditedTip: number | null = null;
   currency: 'EUR' | 'USD';
   readonly displayedColumns = ['name', 'price', 'edit'];
   readonly displayedColumnsForTipFooter = ['tip', 'tipAmount', 'calculateTip'];
@@ -93,15 +98,32 @@ export class BillComponent implements OnInit {
   }
 
   onClickSplitBill(): void {
+    const data: BillSplitDialogData = {
+      billEntries: this.billService.getBill(),
+      manuallyEditedTip: this.manuallyEditedTip,
+    };
     const dialogRef = this.matDialog.open<
       BillSplitDialogComponent,
-      BillEntry[]
-    >(BillSplitDialogComponent, { data: this.billService.getBill() });
+      BillSplitDialogData
+    >(BillSplitDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.changeDetectorRef.markForCheck();
       }
+    });
+  }
+
+  onClickEditTip(): void {
+    const dialogRef = this.matDialog.open<
+      EditTipDialogComponent,
+      number | null,
+      number | null
+    >(EditTipDialogComponent, { data: this.manuallyEditedTip });
+
+    dialogRef.afterClosed().subscribe((newTip) => {
+      this.manuallyEditedTip = newTip || null;
+      this.changeDetectorRef.markForCheck();
     });
   }
 

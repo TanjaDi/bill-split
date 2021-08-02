@@ -2,7 +2,7 @@
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="appName">Bill split</span>
+  <span class="appName">Rechnung aufteilen</span>
   <span class="spacer"></span>
   <button
     class="peopleIndicator"
@@ -12,13 +12,6 @@
   >
     {{ numberOfPayers }}
     <mat-icon>{{ numberOfPayers === 1 ? "person" : "people" }}</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    color="secondary"
-    aria-label="Split bill"
-  >
-    <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>
 

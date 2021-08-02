@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Trinkgeld anpassen</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="inputWrapper">
+    <mat-form-field appearance="fill" class="priceFormField">
+      <mat-label>Trinkgeld</mat-label>
+      <input
+        matInput
+        min="0"
+        required
+        type="number"
+        [(ngModel)]="manuallyEditedTip"
+      />
+      <span matSuffix>€</span>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null">
+    <mat-icon>delete</mat-icon>
+    Reset auf {{ tipInPercent }}%
+  </button>
+  <button
+    color="primary"
+    mat-button
+    [mat-dialog-close]="manuallyEditedTip"
+    cdkFocusInitial
+  >
+    OK
+  </button>
+</mat-dialog-actions>
