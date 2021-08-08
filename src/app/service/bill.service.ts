@@ -26,16 +26,19 @@ export class BillService {
 
   createNewBillEntry(currency: 'EUR' | 'USD'): BillEntry {
     return {
-      id: uuidv4(),
-      name: 'Eintrag ' + (this.getBill().length + 1),
+      id: '',
+      name: '',
       price: 0,
       currency: currency,
       debtors: new PersonGroup([1]),
     };
   }
 
-  addBillEntry(newEntry: BillEntry): void {
+  addNewBillEntry(newEntry: BillEntry): void {
     const bill = this.bill$.getValue();
+    if (newEntry.id === '') {
+      newEntry.id = uuidv4();
+    }
     bill.push(newEntry);
     this.saveBill(bill);
   }
@@ -53,6 +56,14 @@ export class BillService {
       LocalStorageService.CURRENT_BILL,
       JSON.stringify(bill)
     );
+  }
+
+  saveBillEntry(billEntry: BillEntry): void {
+    const bill = this.getBill();
+    const indexToUpdate = bill.findIndex(
+      (iEntry) => iEntry.id === billEntry.id
+    );
+    bill.splice(indexToUpdate, 1, billEntry);
   }
 
   clearBill(): void {

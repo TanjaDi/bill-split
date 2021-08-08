@@ -134,19 +134,20 @@ export class BillComponent implements OnInit {
       BillEntry | null
     >(EditBillEntryDialogComponent, { data: billEntryToEdit });
 
-    dialogRef.afterClosed().subscribe((updatedBill) => {
-      if (updatedBill === null && billEntryToEdit !== null) {
-        // delete existing
-        this.billService.removeBillEntry(billEntryToEdit.id);
-      } else if (updatedBill != null && billEntryToEdit === null) {
-        // add new
-        this.billService.addBillEntry(updatedBill);
-      } else {
-        // update
-        const bill = this.billService.getBill();
-        this.billService.saveBill(bill);
+    dialogRef.afterClosed().subscribe((updatedOrNewBill) => {
+      if (updatedOrNewBill !== undefined) {
+        if (updatedOrNewBill === null && billEntryToEdit !== null) {
+          // delete existing
+          this.billService.removeBillEntry(billEntryToEdit.id);
+        } else if (updatedOrNewBill !== null && billEntryToEdit === null) {
+          // add new
+          this.billService.addNewBillEntry(updatedOrNewBill);
+        } else if (updatedOrNewBill !== null) {
+          // update
+          this.billService.saveBillEntry(updatedOrNewBill);
+        }
+        this.changeDetectorRef.markForCheck();
       }
-      this.changeDetectorRef.markForCheck();
     });
   }
 }

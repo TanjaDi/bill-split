@@ -5,9 +5,8 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BillEntry } from 'src/app/model/billl-entry.model';
-import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { SettingsService } from './../../service/settings.service';
 
@@ -21,21 +20,25 @@ export class EditBillEntryDialogComponent implements OnInit {
   billEntry: BillEntry;
   currencySymbol: string;
   numberOfPayers: number;
-  debtors: PersonGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: BillEntry | null,
+    @Inject(MAT_DIALOG_DATA) existingEntry: BillEntry | null,
+    private dialogRef: MatDialogRef<
+      EditBillEntryDialogComponent,
+      BillEntry | null
+    >,
     private settingsService: SettingsService,
     private billService: BillService
   ) {
-    if (data === null) {
+    if (existingEntry === null) {
       this.billEntry = this.billService.createNewBillEntry(
         this.settingsService.currency
       );
     } else {
-      this.billEntry = data;
+      this.billEntry = {
+        ...existingEntry,
+      };
     }
-    this.debtors = this.billEntry.debtors;
     this.numberOfPayers = this.settingsService.numberOfPayers;
     this.currencySymbol = getCurrencySymbol(
       this.settingsService.currency,
@@ -47,10 +50,17 @@ export class EditBillEntryDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   toggleSelected(personNumber: number): void {
-    this.debtors.toggleSelected(personNumber);
+    this.billEntry.debtors.toggleSelected(personNumber);
   }
 
   isPersonSelected(personNumber: number): boolean {
-    return this.debtors.isPersonSelected(personNumber);
+    return this.billEntry.debtors.isPersonSelected(personNumber);
+  }
+
+  onClickOK(): void {
+    if (this.billEntry.name === '') {
+      this.billEntry.name = 'Eintrag';
+    }
+    this.dialogRef.close(this.billEntry);
   }
 }
