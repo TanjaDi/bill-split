@@ -49,20 +49,13 @@
     <div class="tableRow totalWithTipRow">
       <div class="tableCell name">
         mit Trinkgeld
-        <span *ngIf="manuallyEditedTip === null"
-          >{{ tipInPercent }}% = {{ roundedTip | currency: currency }}
-        </span>
-        <span *ngIf="manuallyEditedTip !== null"
-          >{{ manuallyEditedTip | currency: currency }}
+        <span
+          >{{ currentTipPercent | number: "1.0-0" }}% =
+          {{ currentTipValue | currency: currency }}
         </span>
       </div>
       <div class="tableCell price tip">
-        {{
-          (manuallyEditedTip === null
-            ? total + roundedTip
-            : total + manuallyEditedTip
-          ) | currency: currency
-        }}
+        {{ total + currentTipValue | currency: currency }}
       </div>
       <div class="tableCell lastCell">
         <button

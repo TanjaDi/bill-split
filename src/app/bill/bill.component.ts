@@ -8,14 +8,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { BillEntry } from '../model/billl-entry.model';
 import { PersonGroup } from '../model/person-group.model';
-import { EditTipDialogComponent } from './../edit-tip-dialog/edit-tip-dialog.component';
+import { CalculateService } from '../service/calculate.service';
+import {
+  EditTipDialogComponent,
+  EditTipDialogData,
+} from './../edit-tip-dialog/edit-tip-dialog.component';
 import { BillService } from './../service/bill.service';
 import { SettingsService } from './../service/settings.service';
 import {
   BillSplitDialogComponent,
   BillSplitDialogData,
 } from './bill-split-dialog/bill-split-dialog.component';
-import { CalculateService } from './calculate.service';
 import {
   DebtorSelectionDialogComponent as DebtorsSelectionDialogComponent,
   DebtorSelectionDialogData as DebtorsSelectionDialogData,
@@ -29,11 +32,10 @@ import { EditBillEntryDialogComponent } from './edit-bill-entry-dialog/edit-bill
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class BillComponent implements OnInit {
-  tipInPercent: number;
   bill$: Observable<BillEntry[]>;
   total = 0;
-  roundedTip = 0;
-  manuallyEditedTip: number | null = null;
+  currentTipValue: number;
+  currentTipPercent: number;
   currency: 'EUR' | 'USD';
   readonly displayedColumns = ['name', 'price', 'edit'];
   readonly displayedColumnsForTipFooter = ['tip', 'tipAmount', 'calculateTip'];
@@ -47,8 +49,9 @@ export class BillComponent implements OnInit {
     private matDialog: MatDialog,
     private changeDetectorRef: ChangeDetectorRef
   ) {
-    this.tipInPercent = this.settingsService.tipInPercent;
+    this.currentTipPercent = this.settingsService.tipInPercent;
     this.currency = this.settingsService.currency;
+    this.currentTipValue = 0;
 
     this.bill$ = this.billService.getBill$().asObservable();
     const billChangesSubscription = this.billService
@@ -64,7 +67,14 @@ export class BillComponent implements OnInit {
     this.currency =
       newBill.find((a) => a)?.currency || this.settingsService.currency;
     this.total = this.calculateService.calculateTotal(newBill);
-    this.roundedTip = this.calculateService.calculateRoundedTip(this.total);
+    this.currentTipValue = this.calculateService.calculateRoundedTip(
+      this.total,
+      this.settingsService.tipInPercent
+    );
+    this.currentTipPercent = this.calculateService.calculateTipInPercent(
+      this.currentTipValue,
+      this.total
+    );
   }
 
   ngOnInit(): void {}
@@ -100,7 +110,7 @@ export class BillComponent implements OnInit {
   onClickSplitBill(): void {
     const data: BillSplitDialogData = {
       billEntries: this.billService.getBill(),
-      manuallyEditedTip: this.manuallyEditedTip,
+      tipValue: this.currentTipValue,
     };
     const dialogRef = this.matDialog.open<
       BillSplitDialogComponent,
@@ -115,15 +125,26 @@ export class BillComponent implements OnInit {
   }
 
   onClickEditTip(): void {
+    const data: EditTipDialogData = {
+      tipValue: this.currentTipValue,
+      total: this.total,
+      currency: this.currency,
+    };
     const dialogRef = this.matDialog.open<
       EditTipDialogComponent,
-      number | null,
+      EditTipDialogData,
       number | null
-    >(EditTipDialogComponent, { data: this.manuallyEditedTip });
+    >(EditTipDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((newTip) => {
-      this.manuallyEditedTip = newTip || null;
-      this.changeDetectorRef.markForCheck();
+      if (newTip !== undefined && newTip !== null) {
+        this.currentTipValue = newTip;
+        this.currentTipPercent = this.calculateService.calculateTipInPercent(
+          this.currentTipValue,
+          this.total
+        );
+        this.changeDetectorRef.markForCheck();
+      }
     });
   }
 
@@ -144,7 +165,7 @@ export class BillComponent implements OnInit {
           this.billService.addNewBillEntry(updatedOrNewBill);
         } else if (updatedOrNewBill !== null) {
           // update
-          this.billService.saveBillEntry(updatedOrNewBill);
+          this.billService.updateBillEntry(updatedOrNewBill);
         }
         this.changeDetectorRef.markForCheck();
       }

@@ -30,4 +30,8 @@ body {
   --bsplit-color17: #808000;
   --bsplit-color18: #ffd8b1;
   --bsplit-color19: #808080;
+
+  input[type="number"] {
+    text-align: right;
+  }
 }

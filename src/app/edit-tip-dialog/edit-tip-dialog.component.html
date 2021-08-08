@@ -1,29 +1,58 @@
 <h2 mat-dialog-title>Trinkgeld anpassen</h2>
 <mat-dialog-content class="mat-typography">
-  <div class="inputWrapper">
-    <mat-form-field appearance="fill" class="priceFormField">
-      <mat-label>Trinkgeld</mat-label>
+  <div class="valuesWrapper">
+    <div class="sumLabel">
+      <label>Summe:</label>
+      <label>{{ total | currency: currency }}</label>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>Summe mit Trinkgeld</mat-label>
       <input
+        #totalWithTipNgModel="ngModel"
         matInput
-        min="0"
+        [min]="total"
         required
+        cdkFocusInitial
         type="number"
-        [(ngModel)]="manuallyEditedTip"
+        [ngModel]="totalWithTip | number: '1.2-2'"
+        (ngModelChange)="onEditSumWithTip($event)"
       />
       <span matSuffix>€</span>
+      <mat-error *ngIf="totalWithTipNgModel.hasError('required')">
+        Wert fehlt.
+      </mat-error>
+      <mat-error *ngIf="totalWithTipNgModel.hasError('min')">
+        Wert sollte mindestens die Rechnungssumme sein.
+      </mat-error>
     </mat-form-field>
+    <div class="tip">
+      <label>Trinkgeld:</label>
+      <label>{{ currentTipValue | currency: currency }}</label>
+    </div>
+    <div class="tip">
+      <label>Trinkgeld in %:</label>
+      <label>{{ currentTipPercent | number: "1.0-0" }}%</label>
+    </div>
+  </div>
+  <div class="buttonWrapper">
+    <button mat-flat-button color="accent" (click)="onClickSetTip(0)">
+      Setzen auf 0%
+    </button>
+    <button
+      mat-flat-button
+      color="accent"
+      (click)="onClickRoundTip(defaultTipInPercent)"
+    >
+      Runden auf {{ defaultTipInPercent }}%
+    </button>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="null">
-    <mat-icon>delete</mat-icon>
-    Reset auf {{ tipInPercent }}%
-  </button>
   <button
     color="primary"
+    [disabled]="!totalWithTipNgModel.valid"
     mat-button
-    [mat-dialog-close]="manuallyEditedTip"
-    cdkFocusInitial
+    (click)="onClickOK()"
   >
     OK
   </button>

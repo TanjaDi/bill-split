@@ -58,12 +58,13 @@ export class BillService {
     );
   }
 
-  saveBillEntry(billEntry: BillEntry): void {
+  updateBillEntry(billEntry: BillEntry): void {
     const bill = this.getBill();
     const indexToUpdate = bill.findIndex(
       (iEntry) => iEntry.id === billEntry.id
     );
     bill.splice(indexToUpdate, 1, billEntry);
+    this.saveBill(bill);
   }
 
   clearBill(): void {

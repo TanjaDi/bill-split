@@ -7,12 +7,12 @@ import {
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { Debtor } from 'src/app/model/debtor.model';
+import { CalculateService } from 'src/app/service/calculate.service';
 import { SettingsService } from 'src/app/service/settings.service';
-import { CalculateService } from './../calculate.service';
 
 export interface BillSplitDialogData {
   billEntries: BillEntry[];
-  manuallyEditedTip: null | number;
+  tipValue: number;
 }
 
 @Component({
@@ -26,7 +26,7 @@ export class BillSplitDialogComponent implements OnInit {
   numberOfPayers: number;
   payer: number;
   debtors: Debtor[] = [];
-  manuallyEditedTip: number | null;
+  tipValue: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: BillSplitDialogData,
@@ -34,11 +34,12 @@ export class BillSplitDialogComponent implements OnInit {
     private calculateService: CalculateService
   ) {
     this.billEntries = data.billEntries;
-    this.manuallyEditedTip = data.manuallyEditedTip;
+    this.tipValue = data.tipValue;
     this.payer = 1;
     this.numberOfPayers = this.settingsService.numberOfPayers;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
-      this.billEntries, this.manuallyEditedTip
+      this.billEntries,
+      this.tipValue
     );
   }
 
@@ -48,7 +49,7 @@ export class BillSplitDialogComponent implements OnInit {
     this.payer = payerNumber;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
       this.billEntries,
-      this.manuallyEditedTip
+      this.tipValue
     );
   }
 }

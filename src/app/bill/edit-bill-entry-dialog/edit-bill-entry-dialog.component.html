@@ -10,6 +10,7 @@
         type="text"
         [placeholder]="'Eintrag'"
         [(ngModel)]="billEntry.name"
+        cdkFocusInitial
       />
     </mat-form-field>
     <mat-form-field appearance="fill" class="priceFormField">
@@ -20,14 +21,15 @@
         required
         min="0"
         type="number"
-        [(ngModel)]="billEntry.price"
+        [ngModel]="billEntry.price | number: '1.2-2'"
+        (ngModelChange)="billEntry.price = $event"
       />
       <span matSuffix>€</span>
       <mat-error *ngIf="price.hasError('required')">
         Preis muss gesetzt sein.
       </mat-error>
       <mat-error *ngIf="price.hasError('min')">
-        Preis sollte größer 0 sein.
+        Preis sollte größer 0 € sein.
       </mat-error>
     </mat-form-field>
   </div>
@@ -58,7 +60,6 @@
     [disabled]="!price.valid"
     mat-button
     (click)="onClickOK()"
-    cdkFocusInitial
   >
     OK
   </button>
