@@ -1,0 +1,51 @@
+{
+  "GENERAL": {
+    "TOTAL": "Summe",
+    "TOTAL_WITH_TIP": "Summe mit Trinkgeld",
+    "TIP": "Trinkgeld",
+    "TIP_IN_PERCENT": "Trinkgeld in %",
+    "OK": "OK",
+    "NEW": "Neu",
+    "NAME": "Name",
+    "DELETE": "Löschen"
+  },
+  "HEADER": {
+    "NEW_BILL": "Neue Rechnung"
+  },
+  "SETTINGS": {
+    "HEADLINE": "Einstellungen",
+    "LANGUAGE": {
+      "LABEL": "Sprache",
+      "DE": "Deutsch",
+      "EN": "Englisch"
+    },
+    "THEME": {
+      "LABEL": "Darstellung",
+      "DARK_THEME": "Dunkler Modus"
+    }
+  },
+  "BILL": {
+    "TIP": {
+      "CHANGE_TIP_DIALOG": {
+        "TITLE": "Trinkgeld anpassen",
+        "SET_TIP_TO_PERCENT": "Setzen auf {{tipInPercent}}%",
+        "ROUND_TIP_TO_PERCENT": "Runden auf {{tipInPercent}}%"
+      }
+    },
+    "ENTRY": "Eintrag",
+    "PRICE": "Preis",
+    "CONSUMED_BY": "bestellt von",
+    "WHO_ORDERED": "Wer hat bestellt?",
+    "CHANGE_ENTRY": "Ändere Eintrag",
+    "NEW_ENTRY": "Neuer Eintrag",
+    "SPLIT_BILL": "Rechnung aufteilen",
+    "WHO_PAYS": "Wer bezahlt?",
+    "BILL_FOR": "Rechnung für",
+    "RECEIVES": "bekommt von"
+  },
+  "ERROR": {
+    "REQUIRED": "Wert fehlt.",
+    "VALUE_SHOULD_BE_HIGHER_THAN_TOTAL": "Wert sollte mindestens die Rechnungssumme sein.",
+    "PRICE_MIN": "Preis sollte größer als {{min}} sein."
+  }
+}
