@@ -6,32 +6,32 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { BillEntry } from '../model/billl-entry.model';
-import { PersonGroup } from '../model/person-group.model';
-import { CalculateService } from '../service/calculate.service';
 import {
   EditTipDialogComponent,
   EditTipDialogData,
-} from './../edit-tip-dialog/edit-tip-dialog.component';
-import { BillService } from './../service/bill.service';
-import { SettingsService } from './../service/settings.service';
+} from 'src/app/edit-tip-dialog/edit-tip-dialog.component';
+import { BillEntry } from 'src/app/model/billl-entry.model';
+import { PersonGroup } from 'src/app/model/person-group.model';
+import { BillService } from 'src/app/service/bill.service';
+import { CalculateService } from 'src/app/service/calculate.service';
+import { SettingsService } from 'src/app/service/settings.service';
 import {
   BillSplitDialogComponent,
   BillSplitDialogData,
-} from './bill-split-dialog/bill-split-dialog.component';
+} from '../bill-split-dialog/bill-split-dialog.component';
 import {
-  DebtorSelectionDialogComponent as DebtorsSelectionDialogComponent,
-  DebtorSelectionDialogData as DebtorsSelectionDialogData,
-} from './debtor-selection-dialog/debtor-selection-dialog.component';
-import { EditBillEntryDialogComponent } from './edit-bill-entry-dialog/edit-bill-entry-dialog.component';
+  DebtorSelectionDialogComponent,
+  DebtorSelectionDialogData,
+} from '../debtor-selection-dialog/debtor-selection-dialog.component';
+import { EditBillEntryDialogComponent } from '../edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 
 @Component({
-  selector: 'bsplit-bill',
-  templateUrl: './bill.component.html',
-  styleUrls: ['./bill.component.scss'],
+  selector: 'bsplit-bill-overview',
+  templateUrl: './bill-overview.component.html',
+  styleUrls: ['./bill-overview.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class BillComponent implements OnInit {
+export class BillOverviewComponent implements OnInit {
   bill$: Observable<BillEntry[]>;
   total = 0;
   currentTipValue: number;
@@ -80,16 +80,16 @@ export class BillComponent implements OnInit {
   ngOnInit(): void {}
 
   openDebtorsSelection(billEntry: BillEntry): void {
-    const data: DebtorsSelectionDialogData = {
+    const data: DebtorSelectionDialogData = {
       debtors: billEntry.debtors,
       numberOfPayers: this.settingsService.numberOfPayers,
       entryName: billEntry.name,
     };
     const dialogRef = this.matDialog.open<
-      DebtorsSelectionDialogComponent,
-      DebtorsSelectionDialogData,
+      DebtorSelectionDialogComponent,
+      DebtorSelectionDialogData,
       PersonGroup
-    >(DebtorsSelectionDialogComponent, { data });
+    >(DebtorSelectionDialogComponent, { data });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

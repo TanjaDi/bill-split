@@ -1,12 +1,12 @@
-<h2 mat-dialog-title>Trinkgeld anpassen</h2>
+<h2 mat-dialog-title>{{ "BILL.TIP.CHANGE_TIP_DIALOG.TITLE" | translate }}</h2>
 <mat-dialog-content class="mat-typography">
   <div class="valuesWrapper">
     <div class="sumLabel">
-      <label>Summe:</label>
+      <label>{{ "GENERAL.TOTAL" | translate }}:</label>
       <label>{{ total | currency: currency }}</label>
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Summe mit Trinkgeld</mat-label>
+      <mat-label>{{ "GENERAL.TOTAL_WITH_TIP" | translate }}</mat-label>
       <input
         #totalWithTipNgModel="ngModel"
         matInput
@@ -19,31 +19,37 @@
       />
       <span matSuffix>€</span>
       <mat-error *ngIf="totalWithTipNgModel.hasError('required')">
-        Wert fehlt.
+        {{ "ERROR.REQUIRED" | translate }}
       </mat-error>
       <mat-error *ngIf="totalWithTipNgModel.hasError('min')">
-        Wert sollte mindestens die Rechnungssumme sein.
+        {{ "ERROR.VALUE_SHOULD_BE_HIGHER_THAN_TOTAL" | translate }}
       </mat-error>
     </mat-form-field>
     <div class="tip">
-      <label>Trinkgeld:</label>
+      <label>{{ "GENERAL.TIP" | translate }}:</label>
       <label>{{ currentTipValue | currency: currency }}</label>
     </div>
     <div class="tip">
-      <label>Trinkgeld in %:</label>
+      <label>{{ "GENERAL.TIP_IN_PERCENT" | translate }}:</label>
       <label>{{ currentTipPercent | number: "1.0-0" }}%</label>
     </div>
   </div>
   <div class="buttonWrapper">
     <button mat-flat-button color="accent" (click)="onClickSetTip(0)">
-      Setzen auf 0%
+      {{
+        "BILL.TIP.CHANGE_TIP_DIALOG.SET_TIP_TO_PERCENT"
+          | translate: { tipInPercent: 0 }
+      }}
     </button>
     <button
       mat-flat-button
       color="accent"
       (click)="onClickRoundTip(defaultTipInPercent)"
     >
-      Runden auf {{ defaultTipInPercent }}%
+      {{
+        "BILL.TIP.CHANGE_TIP_DIALOG.ROUND_TIP_TO_PERCENT"
+          | translate: { tipInPercent: defaultTipInPercent }
+      }}
     </button>
   </div>
 </mat-dialog-content>
@@ -54,6 +60,6 @@
     mat-button
     (click)="onClickOK()"
   >
-    OK
+    {{ "GENERAL.OK" | translate }}
   </button>
 </mat-dialog-actions>

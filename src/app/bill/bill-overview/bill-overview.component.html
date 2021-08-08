@@ -1,0 +1,77 @@
+<bsplit-header context="bill"></bsplit-header>
+<div class="content">
+  <div class="billWrapper">
+    <!-- data rows -->
+    <div class="tableRow dataRow" *ngFor="let entry of bill$ | async">
+      <div class="tableCell name" (dblclick)="onDoubleClickEntry(entry)">
+        {{ entry.name }}
+      </div>
+      <div class="tableCell price" (dblclick)="onDoubleClickEntry(entry)">
+        {{ entry.price | currency: entry.currency }}
+      </div>
+      <bsplit-people
+        class="tableCell lastCell"
+        [peopleIds]="entry.debtors.getPersonIds()"
+        (clickButton)="openDebtorsSelection(entry)"
+      ></bsplit-people>
+    </div>
+    <!-- Buttons -->
+    <div class="footerRowGroup">
+      <div class="tableRow emptyRow">
+        <div class="tableCell">
+          <button
+            class="addButton"
+            mat-flat-button
+            color="primary"
+            (click)="onClickAddEntry()"
+          >
+            <mat-icon>add</mat-icon>
+            {{'GENERAL.NEW' | translate}}
+          </button>
+        </div>
+        <div class="tableCell"></div>
+        <div class="tableCell lastCell">
+          <button
+            class="splitButton"
+            mat-flat-button
+            color="accent"
+            (click)="onClickSplitBill()"
+          >
+            <mat-icon>call_split</mat-icon>
+          </button>
+        </div>
+      </div>
+      <!-- Total -->
+      <div class="tableRow totalRow">
+        <div class="tableCell name">{{'GENERAL.TOTAL' | translate}}</div>
+        <div class="tableCell price total">
+          {{ total | currency: currency }}
+        </div>
+        <div class="tableCell lastCell"></div>
+      </div>
+      <!-- Tip -->
+      <div class="tableRow totalWithTipRow">
+        <div class="tableCell name">
+          {{'GENERAL.TOTAL_WITH_TIP' | translate}}
+          <span
+            >{{ currentTipPercent | number: "1.0-0" }}% =
+            {{ currentTipValue | currency: currency }}
+          </span>
+        </div>
+        <div class="tableCell price tip">
+          {{ total + currentTipValue | currency: currency }}
+        </div>
+        <div class="tableCell lastCell">
+          <button
+            class="splitButton"
+            mat-flat-button
+            color="primary"
+            (click)="onClickEditTip()"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

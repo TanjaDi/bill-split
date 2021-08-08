@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { BillService } from 'src/app/service/bill.service';
 import { SettingsService } from './../../service/settings.service';
@@ -28,7 +29,8 @@ export class EditBillEntryDialogComponent implements OnInit {
       BillEntry | null
     >,
     private settingsService: SettingsService,
-    private billService: BillService
+    private billService: BillService,
+    private translateService: TranslateService
   ) {
     if (existingEntry === null) {
       this.billEntry = this.billService.createNewBillEntry(
@@ -59,7 +61,7 @@ export class EditBillEntryDialogComponent implements OnInit {
 
   onClickOK(): void {
     if (this.billEntry.name === '') {
-      this.billEntry.name = 'Eintrag';
+      this.billEntry.name = this.translateService.instant('BILL.ENTRY');
     }
     this.dialogRef.close(this.billEntry);
   }

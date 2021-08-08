@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>Rechnung aufteilen</h2>
+<h2 mat-dialog-title>{{ "BILL.SPLIT_BILL" | translate }}</h2>
 <mat-dialog-content class="mat-typography">
-  <h3>Wer bezahlt?</h3>
+  <h3>{{ "BILL.WHO_PAYS" | translate }}</h3>
   <div class="selectPayer">
     <ng-container
       *ngFor="let i of [].constructor(numberOfPayers); let index = index"
@@ -18,7 +18,7 @@
       <ng-container *ngIf="debtor.personNumber !== payer">
         <div class="billForOne">
           <h3>
-            Rechnung für
+            {{ "BILL.BILL_FOR" | translate }}
             <bsplit-people [peopleIds]="[debtor.personNumber]"> </bsplit-people>
           </h3>
           <div class="entryForOne" *ngFor="let entry of debtor.entries">
@@ -28,13 +28,14 @@
             }}</span>
           </div>
           <div class="entryForOne">
-            <span>Trinkgeld</span>
+            <span>{{ "GENERAL.TIP" | translate }}</span>
             <span>{{ debtor.tip | currency: settingsService.currency }}</span>
           </div>
           <h4 class="summaryForOne" *ngIf="debtor.personNumber !== payer">
-            <bsplit-people [peopleIds]="[payer]"></bsplit-people> bekommt von
+            <bsplit-people [peopleIds]="[payer]"></bsplit-people>
+            {{ "BILL.RECEIVES" | translate }}
             <bsplit-people [peopleIds]="[debtor.personNumber]"></bsplit-people>
-            {{ debtor.amount | currency: settingsService.currency }} zurück.
+            {{ debtor.amount | currency: settingsService.currency }}.
           </h4>
         </div>
       </ng-container>

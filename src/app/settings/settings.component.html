@@ -1,0 +1,34 @@
+<bsplit-header
+  context="settings"
+  [headline]="'SETTINGS.HEADLINE' | translate"
+></bsplit-header>
+<div class="content">
+  <div class="settings">
+    <div class="theme">
+      <label>{{ "SETTINGS.THEME.LABEL" | translate }}</label>
+      <mat-slide-toggle
+        [checked]="isDarkTheme$ | async"
+        (change)="toggleDarkTheme($event.checked)"
+        >{{ "SETTINGS.THEME.DARK_THEME" | translate }}</mat-slide-toggle
+      >
+    </div>
+
+    <div class="language">
+      <label id="languageLabel">{{
+        "SETTINGS.LANGUAGE.LABEL" | translate
+      }}</label>
+      <mat-radio-group
+        aria-labelledby="languageLabel"
+        [(ngModel)]="userLanguage"
+        (change)="onChangeLanguage($event)"
+      >
+        <mat-radio-button
+          *ngFor="let iLanguage of languages"
+          [value]="iLanguage"
+        >
+          {{ "SETTINGS.LANGUAGE." + iLanguage.toUpperCase() | translate }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</div>

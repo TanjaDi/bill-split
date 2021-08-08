@@ -1,6 +1,8 @@
 import { registerLocaleData } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import localeEn from '@angular/common/locales/en';
+import localeDeExtra from '@angular/common/locales/extra/de';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,32 +11,41 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BillOverviewComponent } from './bill/bill-overview/bill-overview.component';
 import { BillSplitDialogComponent } from './bill/bill-split-dialog/bill-split-dialog.component';
-import { BillComponent } from './bill/bill.component';
 import { DebtorSelectionDialogComponent } from './bill/debtor-selection-dialog/debtor-selection-dialog.component';
 import { EditBillEntryDialogComponent } from './bill/edit-bill-entry-dialog/edit-bill-entry-dialog.component';
+import { EditTipDialogComponent } from './edit-tip-dialog/edit-tip-dialog.component';
 import { HeaderComponent } from './header/header.component';
 import { PeopleComponent } from './people/people.component';
-import { EditTipDialogComponent } from './edit-tip-dialog/edit-tip-dialog.component';
+import { SettingsComponent } from './settings/settings.component';
 
-registerLocaleData(localeDe);
-registerLocaleData(localeEn);
+export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+registerLocaleData(localeDe, 'de', localeDeExtra);
+registerLocaleData(localeEn, 'en');
 
 @NgModule({
   declarations: [
     AppComponent,
-    BillComponent,
+    BillOverviewComponent,
     HeaderComponent,
     DebtorSelectionDialogComponent,
     EditBillEntryDialogComponent,
     BillSplitDialogComponent,
     PeopleComponent,
     EditTipDialogComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +53,15 @@ registerLocaleData(localeEn);
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'de',
+    }),
     MatInputModule,
     MatIconModule,
     MatFormFieldModule,
@@ -49,6 +69,8 @@ registerLocaleData(localeEn);
     MatButtonModule,
     MatToolbarModule,
     MatDialogModule,
+    MatRadioModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

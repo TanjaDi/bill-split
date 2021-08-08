@@ -1,20 +1,23 @@
-<h2 mat-dialog-title>
-  {{ billEntry.price !== 0 ? "Ändere" : "Neuer" }} Eintrag
+<h2 mat-dialog-title *ngIf="billEntry.id.length === 0">
+  {{ "BILL.NEW_ENTRY" | translate }}
+</h2>
+<h2 mat-dialog-title *ngIf="billEntry.id.length > 0">
+  {{ "BILL.CHANGE_ENTRY" | translate }}
 </h2>
 <mat-dialog-content class="mat-typography">
   <div class="inputWrapper">
     <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
+      <mat-label>{{ "GENERAL.NAME" | translate }}</mat-label>
       <input
         matInput
         type="text"
-        [placeholder]="'Eintrag'"
+        [placeholder]="'BILL.ENTRY' | translate"
         [(ngModel)]="billEntry.name"
         cdkFocusInitial
       />
     </mat-form-field>
     <mat-form-field appearance="fill" class="priceFormField">
-      <mat-label>Preis</mat-label>
+      <mat-label>{{ "BILL.PRICE" | translate }}</mat-label>
       <input
         #price="ngModel"
         matInput
@@ -26,16 +29,16 @@
       />
       <span matSuffix>€</span>
       <mat-error *ngIf="price.hasError('required')">
-        Preis muss gesetzt sein.
+        {{ "ERROR.REQUIRED" | translate }}
       </mat-error>
       <mat-error *ngIf="price.hasError('min')">
-        Preis sollte größer 0 € sein.
+        {{ "ERROR.PRICE_MIN" | translate: { min: 0 } }}
       </mat-error>
     </mat-form-field>
   </div>
 
   <div>
-    <h3>Wer zahlt?</h3>
+    <h3>{{ "BILL.WHO_ORDERED" | translate }}</h3>
     <div class="debtorSelection">
       <ng-container
         *ngFor="let i of [].constructor(numberOfPayers); let index = index"
@@ -53,7 +56,7 @@
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]="null" color="warn">
     <mat-icon>delete</mat-icon>
-    Löschen
+    {{ "GENERAL.DELETE" | translate }}
   </button>
   <button
     color="primary"
@@ -61,6 +64,6 @@
     mat-button
     (click)="onClickOK()"
   >
-    OK
+    {{ "GENERAL.OK" | translate }}
   </button>
 </mat-dialog-actions>

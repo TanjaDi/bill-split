@@ -1,10 +1,27 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+  <button
+    *ngIf="context === 'bill'"
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="Menu"
+  >
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="appName">Rechnung aufteilen</span>
+  <button
+    *ngIf="context === 'settings'"
+    mat-icon-button
+    aria-label="Back"
+    routerLink="/"
+  >
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="headline">
+    <span *ngIf="context === 'bill'" class="appName">Splify</span>
+    <span *ngIf="context !== 'bill'">{{ headline }}</span>
+  </div>
   <span class="spacer"></span>
   <button
+    *ngIf="context === 'bill'"
     class="peopleIndicator"
     mat-icon-button
     aria-label="People"
@@ -18,10 +35,10 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="onClickNewBill()">
     <mat-icon>fiber_new</mat-icon>
-    <span>Neue Rechnung</span>
+    <span>{{ "HEADER.NEW_BILL" | translate }}</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/settings">
     <mat-icon>settings</mat-icon>
-    <span>Einstellungen</span>
+    <span>{{ "SETTINGS.HEADLINE" | translate }}</span>
   </button>
 </mat-menu>

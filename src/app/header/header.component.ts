@@ -1,6 +1,6 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BillService } from './../service/bill.service';
-import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from './../service/local-storage.service';
 import { SettingsService } from './../service/settings.service';
 
 @Component({
@@ -9,16 +9,19 @@ import { SettingsService } from './../service/settings.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  numberOfPayers = 2;
+  @Input() context: 'settings' | 'bill' = 'bill';
+  @Input() headline: string = 'Headline';
+  numberOfPayers: number;
 
   constructor(
     private settingsService: SettingsService,
-    private billService: BillService
-  ) {}
-
-  ngOnInit(): void {
+    private billService: BillService,
+    private router: Router
+  ) {
     this.numberOfPayers = this.settingsService.numberOfPayers;
   }
+
+  ngOnInit(): void {}
 
   toggleNumberOfPayers(): void {
     if (this.numberOfPayers < this.settingsService.maxNumberOfPayers) {
@@ -31,7 +34,6 @@ export class HeaderComponent implements OnInit {
 
   onClickNewBill(): void {
     this.billService.clearBill();
+    this.router.navigate(['/bill']);
   }
-
-  onClickSplitBill(): void {}
 }

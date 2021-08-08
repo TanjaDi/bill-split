@@ -1,0 +1,51 @@
+{
+  "GENERAL": {
+    "TOTAL": "Total",
+    "TOTAL_WITH_TIP": "Total with tip",
+    "TIP": "Tip",
+    "TIP_IN_PERCENT": "Tip in %",
+    "OK": "OK",
+    "NEW": "New",
+    "NAME": "Name",
+    "DELETE": "Delete"
+  },
+  "SETTINGS": {
+    "HEADLINE": "Settings",
+    "LANGUAGE": {
+      "LABEL": "Language",
+      "DE": "German",
+      "EN": "English"
+    },
+    "THEME": {
+      "LABEL": "Theme",
+      "DARK_THEME": "Dark theme"
+    }
+  },
+  "BILL": {
+    "TIP": {
+      "CHANGE_TIP_DIALOG": {
+        "TITLE": "Change tip",
+        "SET_TIP_TO_PERCENT": "Set to {{tipInPercent}}%",
+        "ROUND_TIP_TO_PERCENT": "Round to {{tipInPercent}}%"
+      }
+    },
+    "ENTRY": "Item",
+    "PRICE": "Price",
+    "CONSUMED_BY": "ordered by",
+    "WHO_ORDERED": "Who ordered?",
+    "CHANGE_ENTRY": "Update item",
+    "NEW_ENTRY": "New item",
+    "SPLIT_BILL": "Split bill",
+    "WHO_PAYS": "Who is paying?",
+    "BILL_FOR": "Bill for",
+    "RECEIVES": "receives from"
+  },
+  "ERROR": {
+    "REQUIRED": "Value is missing.",
+    "VALUE_SHOULD_BE_HIGHER_THAN_TOTAL": "Value should be at least the total.",
+    "PRICE_MIN": "Price should be more than {{min}}."
+  },
+  "HEADER": {
+    "NEW_BILL": "New bill"
+  }
+}
