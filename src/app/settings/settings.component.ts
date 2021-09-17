@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SettingsService } from 'src/app/service/settings.service';
+import { ThemeService } from './../service/theme.service';
 
 @Component({
   selector: 'bsplit-settings',
@@ -19,13 +20,14 @@ export class SettingsComponent implements OnDestroy {
 
   constructor(
     private translateService: TranslateService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private themeService: ThemeService
   ) {
     const subscription = this.translateService.onLangChange.subscribe(
       (lang) => (this.userLanguage = lang.lang as 'en' | 'de')
     );
     this.subscriptions.push(subscription);
-    this.isDarkTheme$ = of(false);
+    this.isDarkTheme$ = this.themeService.isDarkTheme$;
   }
 
   ngOnDestroy() {
@@ -39,6 +41,6 @@ export class SettingsComponent implements OnDestroy {
   }
 
   toggleDarkTheme(isChecked: boolean): void {
-    // this.themeService.setDarkTheme(isChecked);
+    this.themeService.setDarkTheme(isChecked);
   }
 }

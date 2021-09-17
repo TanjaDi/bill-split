@@ -6,7 +6,7 @@
     width: 100vw;
     height: calc(100% - 3.5rem);
     overflow-y: auto;
-    background-color: white;
+    background-color: var(--background-color);
     z-index: 2;
 
     .billWrapper {
@@ -36,7 +36,6 @@
         .totalWithTipRow .tableCell {
           position: sticky;
           z-index: 1;
-          background-color: white;
         }
 
         .emptyRow .tableCell {

@@ -1,3 +1,6 @@
-<div role="main">
+<div
+  role="main"
+  [class]="(isDarkTheme$ | async) ? 'dark-theme' : 'light-theme'"
+>
   <router-outlet></router-outlet>
 </div>

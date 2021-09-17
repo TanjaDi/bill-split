@@ -9,6 +9,7 @@ export class LocalStorageService {
   private static readonly SETTINGS = 'settings';
   static readonly SETTINGS_LANGUAGE =
     LocalStorageService.SETTINGS + '-language';
+  static readonly SETTING_THEME = LocalStorageService.SETTINGS + '-theme';
 
   constructor() {}
 
