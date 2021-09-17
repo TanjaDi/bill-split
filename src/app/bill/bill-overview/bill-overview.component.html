@@ -3,16 +3,16 @@
   <div class="billWrapper">
     <!-- data rows -->
     <div class="tableRow dataRow" *ngFor="let entry of bill$ | async">
-      <div class="tableCell name" (dblclick)="onDoubleClickEntry(entry)">
+      <div class="tableCell name">
         {{ entry.name }}
       </div>
-      <div class="tableCell price" (dblclick)="onDoubleClickEntry(entry)">
+      <div class="tableCell price">
         {{ entry.price | currency: entry.currency }}
       </div>
       <bsplit-people
         class="tableCell lastCell"
         [peopleIds]="entry.debtors.getPersonIds()"
-        (clickButton)="openDebtorsSelection(entry)"
+        (clickButton)="openEditDialog(entry)"
       ></bsplit-people>
     </div>
     <!-- Buttons -->
@@ -26,7 +26,7 @@
             (click)="onClickAddEntry()"
           >
             <mat-icon>add</mat-icon>
-            {{'GENERAL.NEW' | translate}}
+            {{ "GENERAL.NEW" | translate }}
           </button>
         </div>
         <div class="tableCell"></div>
@@ -43,7 +43,7 @@
       </div>
       <!-- Total -->
       <div class="tableRow totalRow">
-        <div class="tableCell name">{{'GENERAL.TOTAL' | translate}}</div>
+        <div class="tableCell name">{{ "GENERAL.TOTAL" | translate }}</div>
         <div class="tableCell price total">
           {{ total | currency: currency }}
         </div>
@@ -52,7 +52,7 @@
       <!-- Tip -->
       <div class="tableRow totalWithTipRow">
         <div class="tableCell name">
-          {{'GENERAL.TOTAL_WITH_TIP' | translate}}
+          {{ "GENERAL.TOTAL_WITH_TIP" | translate }}
           <span
             >{{ currentTipPercent | number: "1.0-0" }}% =
             {{ currentTipValue | currency: currency }}

@@ -19,10 +19,6 @@ import {
   BillSplitDialogComponent,
   BillSplitDialogData,
 } from '../bill-split-dialog/bill-split-dialog.component';
-import {
-  DebtorSelectionDialogComponent,
-  DebtorSelectionDialogData,
-} from '../debtor-selection-dialog/debtor-selection-dialog.component';
 import { EditBillEntryDialogComponent } from '../edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 
 @Component({
@@ -79,32 +75,8 @@ export class BillOverviewComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openDebtorsSelection(billEntry: BillEntry): void {
-    const data: DebtorSelectionDialogData = {
-      debtors: billEntry.debtors,
-      numberOfPayers: this.settingsService.numberOfPayers,
-      entryName: billEntry.name,
-    };
-    const dialogRef = this.matDialog.open<
-      DebtorSelectionDialogComponent,
-      DebtorSelectionDialogData,
-      PersonGroup
-    >(DebtorSelectionDialogComponent, { data });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        billEntry.debtors = result;
-        this.changeDetectorRef.markForCheck();
-      }
-    });
-  }
-
   onClickAddEntry(): void {
     this.openEditDialog(null);
-  }
-
-  onDoubleClickEntry(billEntry: BillEntry): void {
-    this.openEditDialog(billEntry);
   }
 
   onClickSplitBill(): void {
@@ -148,7 +120,7 @@ export class BillOverviewComponent implements OnInit {
     });
   }
 
-  private openEditDialog(billEntryToEdit: BillEntry | null): void {
+  openEditDialog(billEntryToEdit: BillEntry | null): void {
     const dialogRef = this.matDialog.open<
       EditBillEntryDialogComponent,
       BillEntry | null,

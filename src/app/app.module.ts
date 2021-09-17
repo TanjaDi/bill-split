@@ -22,7 +22,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BillOverviewComponent } from './bill/bill-overview/bill-overview.component';
 import { BillSplitDialogComponent } from './bill/bill-split-dialog/bill-split-dialog.component';
-import { DebtorSelectionDialogComponent } from './bill/debtor-selection-dialog/debtor-selection-dialog.component';
 import { EditBillEntryDialogComponent } from './bill/edit-bill-entry-dialog/edit-bill-entry-dialog.component';
 import { EditTipDialogComponent } from './edit-tip-dialog/edit-tip-dialog.component';
 import { HeaderComponent } from './header/header.component';
@@ -40,7 +39,6 @@ registerLocaleData(localeEn, 'en');
     AppComponent,
     BillOverviewComponent,
     HeaderComponent,
-    DebtorSelectionDialogComponent,
     EditBillEntryDialogComponent,
     BillSplitDialogComponent,
     PeopleComponent,
