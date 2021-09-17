@@ -1,12 +1,22 @@
-<div [class]="'person ' + personGroup.getPersonColors().join(' ')">
+<div
+  [class]="
+    'person ' +
+    personGroup.getPersonColors().join(' ') +
+    (iconOnly ? ' iconOnly' : '')
+  "
+>
   <button
+    *ngIf="iconOnly === false"
     class="peopleIndicator"
     [class.selected]="selected"
-    mat-button
+    mat-stroked-button
     aria-label="People"
     (click)="onClickButton()"
   >
     {{ peopleIds.join(",") }}
     <mat-icon>{{ personGroup.isOne() ? "person" : "people" }}</mat-icon>
   </button>
+  <mat-icon *ngIf="iconOnly === true">
+    {{ personGroup.isOne() ? "person" : "people" }}
+  </mat-icon>
 </div>

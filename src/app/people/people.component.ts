@@ -17,6 +17,7 @@ import { PersonGroup } from '../model/person-group.model';
 export class PeopleComponent implements OnInit {
   @Input() peopleIds: number[] = [];
   @Input() selected = false;
+  @Input() iconOnly = false;
   @Output() clickButton: EventEmitter<void>;
 
   personGroup: PersonGroup = new PersonGroup([1]);

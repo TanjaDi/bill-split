@@ -3,6 +3,11 @@
     background-color: var(--bsplit-color-primary);
   }
 
+  &.iconOnly {
+    display: flex;
+    padding: 0 0.25rem;
+  }
+
   &.color0 mat-icon {
     color: var(--bsplit-color0);
   }

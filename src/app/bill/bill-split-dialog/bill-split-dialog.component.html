@@ -19,7 +19,11 @@
         <div class="billForOne">
           <h3>
             {{ "BILL.BILL_FOR" | translate }}
-            <bsplit-people [peopleIds]="[debtor.personNumber]"> </bsplit-people>
+            <bsplit-people
+              [iconOnly]="true"
+              [peopleIds]="[debtor.personNumber]"
+            >
+            </bsplit-people>
           </h3>
           <div class="entryForOne" *ngFor="let entry of debtor.entries">
             <span>{{ entry.name }}</span>
@@ -32,9 +36,15 @@
             <span>{{ debtor.tip | currency: settingsService.currency }}</span>
           </div>
           <h4 class="summaryForOne" *ngIf="debtor.personNumber !== payer">
-            <bsplit-people [peopleIds]="[payer]"></bsplit-people>
+            <bsplit-people
+              [peopleIds]="[payer]"
+              [iconOnly]="true"
+            ></bsplit-people>
             {{ "BILL.RECEIVES" | translate }}
-            <bsplit-people [peopleIds]="[debtor.personNumber]"></bsplit-people>
+            <bsplit-people
+              [peopleIds]="[debtor.personNumber]"
+              [iconOnly]="true"
+            ></bsplit-people>
             {{ debtor.amount | currency: settingsService.currency }}.
           </h4>
         </div>
