@@ -24,7 +24,7 @@
         required
         min="0"
         type="number"
-        [ngModel]="billEntry.price | number: '1.2-2'"
+        [ngModel]="billEntry.price"
         (ngModelChange)="billEntry.price = $event"
       />
       <span matSuffix>€</span>
