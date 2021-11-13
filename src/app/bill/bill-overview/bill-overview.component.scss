@@ -31,14 +31,14 @@
       .footerRowGroup {
         display: table-row-group;
 
-        .emptyRow .tableCell,
+        .actionsRow .tableCell,
         .totalRow .tableCell,
         .totalWithTipRow .tableCell {
           position: sticky;
           z-index: 1;
         }
 
-        .emptyRow .tableCell {
+        .actionsRow .tableCell {
           bottom: 5.5rem;
         }
 
