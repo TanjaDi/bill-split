@@ -1,8 +1,7 @@
-import { PersonGroup } from '../../src/app/model/person-group.model';
-import { BillEntry } from './../../src/app/model/billl-entry.model';
-import { LocalStorageService } from './../../src/app/service/local-storage.service';
+import { LocalStorageService } from '../../src/app/service/local-storage.service';
+import * as billEntries from '../fixtures/billEntries.json';
 
-context('Bill', () => {
+context('Bill overview', () => {
   describe('empty bill', () => {
     beforeEach(() => {
       cy.visit('/');
@@ -153,29 +152,6 @@ context('Bill', () => {
 
   describe('load bill from local storage', () => {
     beforeEach(() => {
-      const billEntries: BillEntry[] = [
-        {
-          id: '1',
-          price: 9.9,
-          currency: 'EUR',
-          name: 'Pizza Vegetaria',
-          debtors: new PersonGroup([2]),
-        },
-        {
-          id: '2',
-          price: 6.6,
-          currency: 'EUR',
-          name: 'Coca Cola Zero',
-          debtors: new PersonGroup([1, 2]),
-        },
-        {
-          id: '3',
-          price: 9.7,
-          currency: 'EUR',
-          name: 'Pizza Funghi',
-          debtors: new PersonGroup([1]),
-        },
-      ];
       cy.visit('/');
       cy.log('set local storage: ' + billEntries);
       window.localStorage.setItem(

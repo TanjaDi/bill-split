@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "price": 9.9,
+    "currency": "EUR",
+    "name": "Pizza Vegetaria",
+    "debtors": { "personNumbers": [2] }
+  },
+  {
+    "id": "2",
+    "price": 6.6,
+    "currency": "EUR",
+    "name": "Coca Cola Zero",
+    "debtors": { "personNumbers": [1, 2] }
+  },
+  {
+    "id": "3",
+    "price": 9.7,
+    "currency": "EUR",
+    "name": "Pizza Funghi",
+    "debtors": { "personNumbers": [1] }
+  }
+]
