@@ -8,7 +8,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <button
-    *ngIf="context === 'settings'"
+    *ngIf="['settings', 'bill-entry'].includes(context)"
     mat-icon-button
     aria-label="Back"
     routerLink="/"
@@ -20,6 +20,15 @@
     <span *ngIf="context !== 'bill'">{{ headline }}</span>
   </div>
   <span class="spacer"></span>
+  <button
+    *ngIf="['bill-entry'].includes(context)"
+    mat-icon-button
+    class="saveButton"
+    aria-label="Save"
+    (click)="onClickSaveButton()"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">

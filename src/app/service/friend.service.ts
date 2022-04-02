@@ -10,7 +10,7 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root',
 })
 export class FriendService {
-  friends: Friend[] = [];
+  friends: Friend[];
   private subscription: Subscription;
   readonly COLORS: Color[] = [
     { name: 'red', value: '#c21943' },
@@ -26,12 +26,7 @@ export class FriendService {
     private localStorageService: LocalStorageService
   ) {
     this.subscription = new Subscription();
-    const sub = this.translateService
-      .get(['SETTINGS.PAYERS.YOU'])
-      .subscribe(() => {
-        this.friends = this.initFriends();
-      });
-    this.subscription.add(sub);
+    this.friends = this.initFriends();
   }
 
   createNewFriend(name: string, color?: Color): Friend {

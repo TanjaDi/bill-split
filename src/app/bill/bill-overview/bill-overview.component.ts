@@ -2,13 +2,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import {
   EditTipDialogComponent,
-  EditTipDialogData,
+  EditTipDialogData
 } from 'src/app/edit-tip-dialog/edit-tip-dialog.component';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
@@ -17,9 +18,9 @@ import { CalculateService } from 'src/app/service/calculate.service';
 import { SettingsService } from 'src/app/service/settings.service';
 import {
   BillSplitDialogComponent,
-  BillSplitDialogData,
+  BillSplitDialogData
 } from '../bill-split-dialog/bill-split-dialog.component';
-import { EditBillEntryDialogComponent } from '../edit-bill-entry-dialog/edit-bill-entry-dialog.component';
+import { ROUTE_BILL_ENTRY } from './../../app-routing.module';
 
 @Component({
   selector: 'bsplit-bill-overview',
@@ -39,6 +40,7 @@ export class BillOverviewComponent implements OnInit {
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private router: Router,
     private billService: BillService,
     private settingsService: SettingsService,
     private calculateService: CalculateService,
@@ -76,7 +78,7 @@ export class BillOverviewComponent implements OnInit {
   ngOnInit(): void {}
 
   onClickAddEntry(): void {
-    this.openEditDialog(null);
+    this.gotoBillEntry(null);
   }
 
   onClickSplitBill(): void {
@@ -120,27 +122,7 @@ export class BillOverviewComponent implements OnInit {
     });
   }
 
-  openEditDialog(billEntryToEdit: BillEntry | null): void {
-    const dialogRef = this.matDialog.open<
-      EditBillEntryDialogComponent,
-      BillEntry | null,
-      BillEntry | null
-    >(EditBillEntryDialogComponent, { data: billEntryToEdit });
-
-    dialogRef.afterClosed().subscribe((updatedOrNewBill) => {
-      if (updatedOrNewBill !== undefined) {
-        if (updatedOrNewBill === null && billEntryToEdit !== null) {
-          // delete existing
-          this.billService.removeBillEntry(billEntryToEdit.id);
-        } else if (updatedOrNewBill !== null && billEntryToEdit === null) {
-          // add new
-          this.billService.addNewBillEntry(updatedOrNewBill);
-        } else if (updatedOrNewBill !== null) {
-          // update
-          this.billService.updateBillEntry(updatedOrNewBill);
-        }
-        this.changeDetectorRef.markForCheck();
-      }
-    });
+  gotoBillEntry(billEntryToEdit: BillEntry | null): void {
+    this.router.navigate([ROUTE_BILL_ENTRY], billEntryToEdit ? {queryParams: {id: billEntryToEdit.id}} : undefined);
   }
 }
