@@ -80,16 +80,16 @@ export class CalculateService {
 
   private calculateDebtors(billEntries: BillEntry[]): Debtor[] {
     return billEntries.reduce((result, entry) => {
-      const debtors = entry.debtors.getPersonIds();
+      const debtors = entry.debtors.getFriendIds();
       let splitEqualAmount: number;
       if (debtors.length > 0) {
         splitEqualAmount = entry.price / debtors.length;
       } else {
         splitEqualAmount = 0;
       }
-      debtors.forEach((debtorNumber) => {
+      debtors.forEach((friendId) => {
         const debtorEntry = result.find(
-          (debtor) => debtor.personNumber === debtorNumber
+          (debtor) => debtor.friendId === friendId
         );
         const splitEntry = {
           name: entry.name,
@@ -101,7 +101,7 @@ export class CalculateService {
         } else {
           const newDebt: Debtor = {
             amount: splitEqualAmount,
-            personNumber: debtorNumber,
+            friendId: friendId,
             entries: [splitEntry],
             tip: 0,
           };

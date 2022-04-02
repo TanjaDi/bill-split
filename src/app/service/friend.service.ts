@@ -32,7 +32,9 @@ export class FriendService {
   createNewFriend(name: string, color?: Color): Friend {
     if (!color) {
       const lastFriendColor =
-        this.friends.reverse().find((last) => last)?.color || this.COLORS[0];
+        this.friends.length > 0
+          ? this.friends[this.friends.length - 1]?.color
+          : this.COLORS[0];
       const lastFriendColorIndex = this.COLORS.findIndex(
         (color) => color.name === lastFriendColor.name
       );

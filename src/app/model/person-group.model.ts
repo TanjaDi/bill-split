@@ -1,27 +1,21 @@
 export class PersonGroup {
-  personNumbers: number[];
+  friendIds: string[];
 
-  constructor(personNumbers: number[]) {
-    this.personNumbers = personNumbers;
+  constructor(friendIds: string[]) {
+    this.friendIds = friendIds;
   }
 
-  getPersonIds(): number[] {
-    return this.personNumbers;
-  }
-
-  getPersonColors(): string[] {
-    return this.isOne()
-      ? this.personNumbers.map((personNumber) => 'color' + (personNumber - 1))
-      : [];
+  getFriendIds(): string[] {
+    return this.friendIds;
   }
 
   isOne(): boolean {
-    return this.personNumbers.length === 1;
+    return this.friendIds.length === 1;
   }
 
-  isPersonSelected(personNumber: number): boolean {
-    const foundIndex = this.personNumbers.findIndex(
-      (iDebtor) => iDebtor === personNumber
+  isFriendSelected(friendId: string): boolean {
+    const foundIndex = this.friendIds.findIndex(
+      (iFriend) => iFriend === friendId
     );
     if (foundIndex > -1) {
       return true;
@@ -29,18 +23,18 @@ export class PersonGroup {
     return false;
   }
 
-  toggleSelected(personNumber: number): void {
-    const foundIndex = this.personNumbers.findIndex(
-      (iPerson) => iPerson === personNumber
+  toggleSelected(friendId: string): void {
+    const foundIndex = this.friendIds.findIndex(
+      (iFriend) => iFriend === friendId
     );
     if (foundIndex > -1) {
       if (this.isOne() === false) {
         // only allow deselection if there is more than one debtor left
-        this.personNumbers.splice(foundIndex, 1);
+        this.friendIds.splice(foundIndex, 1);
       }
     } else {
-      this.personNumbers.push(personNumber);
-      this.personNumbers.sort();
+      this.friendIds.push(friendId);
+      this.friendIds.sort();
     }
   }
 }

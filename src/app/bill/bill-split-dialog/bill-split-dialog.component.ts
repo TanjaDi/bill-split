@@ -23,7 +23,7 @@ export interface BillSplitDialogData {
 })
 export class BillSplitDialogComponent implements OnInit {
   billEntries: BillEntry[];
-  payer: number;
+  payer: string;
   debtors: Debtor[] = [];
   tipValue: number;
 
@@ -34,7 +34,10 @@ export class BillSplitDialogComponent implements OnInit {
   ) {
     this.billEntries = data.billEntries;
     this.tipValue = data.tipValue;
-    this.payer = 1;
+    this.payer = this.billEntries
+      .find((first) => first)!
+      .debtors.getFriendIds()
+      .find((first) => first)!;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
       this.billEntries,
       this.tipValue
@@ -43,8 +46,8 @@ export class BillSplitDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onClickPayer(payerNumber: number): void {
-    this.payer = payerNumber;
+  onClickPayer(friendId: string): void {
+    this.payer = friendId;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
       this.billEntries,
       this.tipValue

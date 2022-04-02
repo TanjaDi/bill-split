@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { FriendService } from 'src/app/service/friend.service';
 import { PersonGroup } from '../model/person-group.model';
 
 @Component({
@@ -15,22 +16,45 @@ import { PersonGroup } from '../model/person-group.model';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PeopleComponent implements OnInit {
-  @Input() peopleIds: number[] = [];
+  @Input() friendIds: string[] = [];
   @Input() selected = false;
   @Input() iconOnly = false;
   @Output() clickButton: EventEmitter<void>;
 
-  personGroup: PersonGroup = new PersonGroup([1]);
+  personGroup: PersonGroup;
+  friendsInitials: string = '';
+  friendNames: string = '';
 
-  constructor() {
+  constructor(private friendService: FriendService) {
     this.clickButton = new EventEmitter();
+    this.personGroup = new PersonGroup(
+      this.friendService.friends.map((f) => f.id)
+    );
   }
 
   ngOnInit(): void {
-    this.personGroup = new PersonGroup(this.peopleIds);
+    this.personGroup = new PersonGroup(this.friendIds);
+    const friends = this.friendIds.map(
+      (id) => this.friendService.friends.find((friend) => friend.id === id)!
+    );
+    this.friendsInitials = friends
+      .map((f, index) => f.initials ?? index + 1)
+      .join(', ');
+    this.friendNames = friends.map((f) => f.name).join(', ');
   }
 
   onClickButton(): void {
     this.clickButton.emit();
+  }
+
+  getFriendColor(friendIds: string[]): string {
+    if (friendIds.length === 1) {
+      const index =
+        this.friendService.friends.findIndex(
+          (friend) => friend.id === friendIds[0]
+        ) ?? 0;
+      return 'color' + index;
+    }
+    return '';
   }
 }

@@ -60,7 +60,7 @@ export class BillOverviewComponent implements OnInit {
 
   private onChangeBill(newBill: BillEntry[]) {
     newBill.forEach((entry) => {
-      entry.debtors = new PersonGroup(entry.debtors.personNumbers);
+      entry.debtors = new PersonGroup(entry.debtors.friendIds);
     });
     this.currency =
       newBill.find((a) => a)?.currency || this.settingsService.currency;

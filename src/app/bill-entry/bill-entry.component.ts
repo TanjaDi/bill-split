@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ROUTE_BILL } from 'src/app/app-routing.module';
 import { BillEntry } from 'src/app/model/billl-entry.model';
+import { Friend } from 'src/app/model/friend.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { FriendService } from 'src/app/service/friend.service';
@@ -17,7 +18,7 @@ import { SettingsService } from 'src/app/service/settings.service';
 export class BillEntryComponent implements OnInit {
   billEntry: BillEntry;
   readonly currencySymbol: string;
-  readonly numberOfFriends: number;
+  readonly friends: Friend[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,12 +39,12 @@ export class BillEntryComponent implements OnInit {
         if (foundEntry) {
           this.billEntry = {
             ...foundEntry,
-            debtors: new PersonGroup(foundEntry.debtors.getPersonIds()),
+            debtors: new PersonGroup(foundEntry.debtors.getFriendIds()),
           };
         }
       }
     });
-    this.numberOfFriends = this.friendService.friends.length;
+    this.friends = this.friendService.friends;
     this.currencySymbol = getCurrencySymbol(
       this.settingsService.currency,
       'narrow',
@@ -53,12 +54,12 @@ export class BillEntryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleSelected(personNumber: number): void {
-    this.billEntry.debtors.toggleSelected(personNumber);
+  toggleSelected(friendId: string): void {
+    this.billEntry.debtors.toggleSelected(friendId);
   }
 
-  isPersonSelected(personNumber: number): boolean {
-    return this.billEntry.debtors.isPersonSelected(personNumber);
+  isPersonSelected(friendId: string): boolean {
+    return this.billEntry.debtors.isFriendSelected(friendId);
   }
 
   onClickDelete(): void {

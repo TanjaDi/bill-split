@@ -3,27 +3,27 @@
   <h3>{{ "BILL.WHO_PAYS" | translate }}</h3>
   <div class="selectPayer">
     <ng-container
-      *ngFor="let i of [].constructor(debtors.length); let index = index"
+      *ngFor="let debtor of debtors"
     >
       <bsplit-people
-        [peopleIds]="[index + 1]"
-        [selected]="payer === index + 1"
-        (clickButton)="onClickPayer(index + 1)"
+        [friendIds]="[debtor.friendId]"
+        [selected]="payer === debtor.friendId"
+        (clickButton)="onClickPayer(debtor.friendId)"
       >
       </bsplit-people>
     </ng-container>
   </div>
   <div class="results">
     <ng-container *ngFor="let debtor of debtors">
-      <ng-container *ngIf="debtor.personNumber !== payer">
+      <ng-container *ngIf="debtor.friendId !== payer">
         <div class="billForOne">
           <h3>
-            {{ "BILL.BILL_FOR" | translate }}
+            {{ "BILL.BILL_FOR" | translate }}&nbsp;
             <bsplit-people
               [iconOnly]="true"
-              [peopleIds]="[debtor.personNumber]"
+              [friendIds]="[debtor.friendId]"
             >
-            </bsplit-people>
+            </bsplit-people>:
           </h3>
           <div class="entryForOne" *ngFor="let entry of debtor.entries">
             <span>{{ entry.name }}</span>
@@ -35,17 +35,16 @@
             <span>{{ "GENERAL.TIP" | translate }}</span>
             <span>{{ debtor.tip | currency: settingsService.currency }}</span>
           </div>
-          <h4 class="summaryForOne" *ngIf="debtor.personNumber !== payer">
+          <h4 class="summaryForOne" *ngIf="debtor.friendId !== payer">
             <bsplit-people
-              [peopleIds]="[payer]"
+              [friendIds]="[payer]"
               [iconOnly]="true"
-            ></bsplit-people>
-            {{ "BILL.RECEIVES" | translate }}
+            ></bsplit-people>&nbsp;
+            {{ "BILL.RECEIVES" | translate }}&nbsp;
             <bsplit-people
-              [peopleIds]="[debtor.personNumber]"
+              [friendIds]="[debtor.friendId]"
               [iconOnly]="true"
-            ></bsplit-people>
-            {{ debtor.amount | currency: settingsService.currency }}.
+            ></bsplit-people>{{ debtor.amount | currency: settingsService.currency }}.
           </h4>
         </div>
       </ng-container>

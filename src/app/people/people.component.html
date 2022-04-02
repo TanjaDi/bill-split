@@ -1,7 +1,7 @@
 <div
   [class]="
     'person ' +
-    personGroup.getPersonColors().join(' ') +
+    getFriendColor(personGroup.friendIds) +
     (iconOnly ? ' iconOnly' : '')
   "
 >
@@ -13,10 +13,10 @@
     aria-label="People"
     (click)="onClickButton()"
   >
-    {{ peopleIds.join(",") }}
+    {{ friendsInitials }}
     <mat-icon>{{ personGroup.isOne() ? "person" : "people" }}</mat-icon>
   </button>
-  <mat-icon *ngIf="iconOnly === true">
-    {{ personGroup.isOne() ? "person" : "people" }}
-  </mat-icon>
+  <div *ngIf="iconOnly === true">
+      {{ friendNames }}
+  </div>
 </div>
