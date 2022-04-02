@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
+import { FriendService } from 'src/app/service/friend.service';
 import { SettingsService } from 'src/app/service/settings.service';
-import { ThemeService } from './../service/theme.service';
+import { ThemeService } from 'src/app/service/theme.service';
 
 @Component({
   selector: 'bsplit-settings',
@@ -20,7 +21,8 @@ export class SettingsComponent implements OnDestroy {
 
   constructor(
     private translateService: TranslateService,
-    private settingsService: SettingsService,
+    public friendService: FriendService,
+    public settingsService: SettingsService,
     private themeService: ThemeService
   ) {
     const subscription = this.translateService.onLangChange.subscribe(
@@ -31,6 +33,7 @@ export class SettingsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.friendService.saveFriends();
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
@@ -42,5 +45,17 @@ export class SettingsComponent implements OnDestroy {
 
   toggleDarkTheme(isChecked: boolean): void {
     this.themeService.setDarkTheme(isChecked);
+  }
+
+  onClickAddFriend(): void {
+    const newFriend = this.friendService.createNewFriend('');
+    this.friendService.friends.push(newFriend);
+  }
+
+  onClickRemove(index: number): void {
+    if (this.friendService.friends.length === 1) {
+      return;
+    }
+    this.friendService.friends.splice(index, 1);
   }
 }

@@ -1,3 +1,4 @@
+import { FriendService } from 'src/app/service/friend.service';
 import { getCurrencySymbol } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -20,7 +21,7 @@ import { SettingsService } from './../../service/settings.service';
 export class EditBillEntryDialogComponent implements OnInit {
   billEntry: BillEntry;
   currencySymbol: string;
-  numberOfPayers: number;
+  numberOfFriends: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) existingEntry: BillEntry | null,
@@ -29,6 +30,7 @@ export class EditBillEntryDialogComponent implements OnInit {
       BillEntry | null
     >,
     private settingsService: SettingsService,
+    private friendService: FriendService,
     private billService: BillService,
     private translateService: TranslateService
   ) {
@@ -41,7 +43,7 @@ export class EditBillEntryDialogComponent implements OnInit {
         ...existingEntry,
       };
     }
-    this.numberOfPayers = this.settingsService.numberOfPayers;
+    this.numberOfFriends = this.friendService.friends.length;
     this.currencySymbol = getCurrencySymbol(
       this.settingsService.currency,
       'narrow',

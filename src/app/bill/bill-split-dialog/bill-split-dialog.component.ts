@@ -23,7 +23,6 @@ export interface BillSplitDialogData {
 })
 export class BillSplitDialogComponent implements OnInit {
   billEntries: BillEntry[];
-  numberOfPayers: number;
   payer: number;
   debtors: Debtor[] = [];
   tipValue: number;
@@ -36,7 +35,6 @@ export class BillSplitDialogComponent implements OnInit {
     this.billEntries = data.billEntries;
     this.tipValue = data.tipValue;
     this.payer = 1;
-    this.numberOfPayers = this.settingsService.numberOfPayers;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
       this.billEntries,
       this.tipValue

@@ -7,7 +7,8 @@
     "OK": "OK",
     "NEW": "New",
     "NAME": "Name",
-    "DELETE": "Delete"
+    "DELETE": "Delete",
+    "REMOVE": "Remove"
   },
   "SETTINGS": {
     "HEADLINE": "Settings",
@@ -19,6 +20,13 @@
     "THEME": {
       "LABEL": "Theme",
       "DARK_THEME": "Dark theme"
+    },
+    "PAYERS": {
+      "HEADLINE": "Friends",
+      "NAME": "Name",
+      "COLOR": "Color",
+      "YOU": "You",
+      "INITIALS": "Initials"
     }
   },
   "BILL": {

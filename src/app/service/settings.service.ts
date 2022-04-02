@@ -6,8 +6,7 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root',
 })
 export class SettingsService {
-  numberOfPayers: number;
-  maxNumberOfPayers: number;
+  static readonly MAX_NUMBER_OF_PAYERS = 8;
   tipInPercent: number;
   currency: 'EUR' | 'USD';
 
@@ -15,8 +14,6 @@ export class SettingsService {
     private translateService: TranslateService,
     private localStorageService: LocalStorageService
   ) {
-    this.numberOfPayers = 2;
-    this.maxNumberOfPayers = 4;
     this.tipInPercent = 8;
     this.currency = 'EUR';
     this.initLanguage();

@@ -4,19 +4,17 @@
 ></bsplit-header>
 <div class="content">
   <div class="settings">
-    <div class="theme">
-      <label>{{ "SETTINGS.THEME.LABEL" | translate }}</label>
+    <section class="theme">
+      <h3>{{ "SETTINGS.THEME.LABEL" | translate }}</h3>
       <mat-slide-toggle
         [checked]="isDarkTheme$ | async"
         (change)="toggleDarkTheme($event.checked)"
         >{{ "SETTINGS.THEME.DARK_THEME" | translate }}</mat-slide-toggle
       >
-    </div>
+    </section>
 
-    <div class="language">
-      <label id="languageLabel">{{
-        "SETTINGS.LANGUAGE.LABEL" | translate
-      }}</label>
+    <section class="language">
+      <h3 id="languageLabel">{{ "SETTINGS.LANGUAGE.LABEL" | translate }}</h3>
       <mat-radio-group
         aria-labelledby="languageLabel"
         [(ngModel)]="userLanguage"
@@ -29,6 +27,50 @@
           {{ "SETTINGS.LANGUAGE." + iLanguage.toUpperCase() | translate }}
         </mat-radio-button>
       </mat-radio-group>
-    </div>
+    </section>
+
+    <section class="payers">
+      <h3>{{ "SETTINGS.PAYERS.HEADLINE" | translate }}</h3>
+      <table>
+        <tbody>
+          <tr *ngFor="let friend of friendService.friends; let index = index">
+            <td>
+              <mat-form-field>
+                <mat-label>{{ "SETTINGS.PAYERS.NAME" | translate }}</mat-label>
+                <input
+                  matInput
+                  required
+                  [(ngModel)]="friendService.friends[index].name"
+                />
+              </mat-form-field>
+            </td>
+            <td>
+              <button
+                *ngIf="index > 0"
+                class="removeButton"
+                mat-flat-button
+                color="accent"
+                (click)="onClickRemove(index)"
+              >
+                <mat-icon>remove</mat-icon>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button
+                class="addButton"
+                mat-flat-button
+                color="primary"
+                (click)="onClickAddFriend()"
+              >
+                <mat-icon>add</mat-icon>
+                {{ "GENERAL.NEW" | translate }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </div>
 </div>

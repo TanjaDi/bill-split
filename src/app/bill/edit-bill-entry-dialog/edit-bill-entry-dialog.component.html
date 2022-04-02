@@ -41,7 +41,7 @@
     <h3>{{ "BILL.WHO_ORDERED" | translate }}</h3>
     <div class="debtorSelection">
       <ng-container
-        *ngFor="let i of [].constructor(numberOfPayers); let index = index"
+        *ngFor="let i of [].constructor(numberOfFriends); let index = index"
       >
         <bsplit-people
           [peopleIds]="[index + 1]"
