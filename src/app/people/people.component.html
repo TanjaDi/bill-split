@@ -1,12 +1,10 @@
 <div
   [class]="
     'person ' +
-    getFriendColor(personGroup.friendIds) +
-    (iconOnly ? ' iconOnly' : '')
+    getFriendColor(personGroup.friendIds)
   "
 >
   <button
-    *ngIf="iconOnly === false"
     class="peopleIndicator"
     [class.selected]="selected"
     mat-stroked-button
@@ -16,7 +14,4 @@
     {{ friendsInitials }}
     <mat-icon>{{ personGroup.isOne() ? "person" : "people" }}</mat-icon>
   </button>
-  <div *ngIf="iconOnly === true">
-      {{ friendNames }}
-  </div>
 </div>

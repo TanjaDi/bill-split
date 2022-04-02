@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BillSplitDialogComponent } from './bill-split-dialog.component';
+import { BillSplitComponent } from './bill-split.component';
 
-describe('BillSplitDialogComponent', () => {
-  let component: BillSplitDialogComponent;
-  let fixture: ComponentFixture<BillSplitDialogComponent>;
+describe('BillSplitComponent', () => {
+  let component: BillSplitComponent;
+  let fixture: ComponentFixture<BillSplitComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BillSplitDialogComponent ]
+      declarations: [ BillSplitComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BillSplitDialogComponent);
+    fixture = TestBed.createComponent(BillSplitComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

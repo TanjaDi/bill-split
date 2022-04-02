@@ -21,8 +21,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BillEntryComponent } from './bill-entry/bill-entry.component';
+import { BillSplitComponent } from './bill-split/bill-split.component';
 import { BillOverviewComponent } from './bill/bill-overview/bill-overview.component';
-import { BillSplitDialogComponent } from './bill/bill-split-dialog/bill-split-dialog.component';
 import { EditTipDialogComponent } from './edit-tip-dialog/edit-tip-dialog.component';
 import { HeaderComponent } from './header/header.component';
 import { PeopleComponent } from './people/people.component';
@@ -39,11 +39,11 @@ registerLocaleData(localeEn, 'en');
     AppComponent,
     BillOverviewComponent,
     HeaderComponent,
-    BillSplitDialogComponent,
     PeopleComponent,
     EditTipDialogComponent,
     SettingsComponent,
     BillEntryComponent,
+    BillSplitComponent,
   ],
   imports: [
     BrowserModule,

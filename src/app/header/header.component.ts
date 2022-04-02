@@ -9,12 +9,14 @@ import { BillService } from './../service/bill.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @Input() context: 'settings' | 'bill' | 'bill-entry' = 'bill';
+  @Input() context: 'settings' | 'bill' | 'bill-entry' | 'bill-split' = 'bill';
   @Input() headline: string = 'Headline';
   @Output() saveClick: EventEmitter<void>;
+  @Output() shareClick: EventEmitter<void>;
 
   constructor(private billService: BillService, private router: Router) {
     this.saveClick = new EventEmitter();
+    this.shareClick = new EventEmitter();
   }
 
   ngOnInit(): void {}
@@ -26,5 +28,9 @@ export class HeaderComponent implements OnInit {
 
   onClickSaveButton(): void {
     this.saveClick.emit();
+  }
+
+  onClickShareButton(): void {
+    this.shareClick.emit();
   }
 }

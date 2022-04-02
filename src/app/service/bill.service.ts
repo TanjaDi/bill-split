@@ -21,7 +21,11 @@ export class BillService {
   }
 
   getBill(): BillEntry[] {
-    return this.bill$.getValue();
+    return this.bill$.getValue().map((entry) => {
+      // call new to create class
+      entry.debtors = new PersonGroup(entry.debtors.friendIds);
+      return entry;
+    });
   }
 
   getBill$(): BehaviorSubject<BillEntry[]> {

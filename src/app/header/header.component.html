@@ -8,7 +8,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <button
-    *ngIf="['settings', 'bill-entry'].includes(context)"
+    *ngIf="['settings', 'bill-entry', 'bill-split'].includes(context)"
     mat-icon-button
     aria-label="Back"
     routerLink="/"
@@ -26,6 +26,15 @@
     class="saveButton"
     aria-label="Save"
     (click)="onClickSaveButton()"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
+  <button
+    *ngIf="'bill-split' === context"
+    mat-icon-button
+    class="shareButton"
+    aria-label="Share"
+    (click)="onClickShareButton()"
   >
     <mat-icon>save</mat-icon>
   </button>

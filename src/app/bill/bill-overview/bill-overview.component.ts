@@ -2,25 +2,21 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import {
   EditTipDialogComponent,
-  EditTipDialogData
+  EditTipDialogData,
 } from 'src/app/edit-tip-dialog/edit-tip-dialog.component';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { CalculateService } from 'src/app/service/calculate.service';
 import { SettingsService } from 'src/app/service/settings.service';
-import {
-  BillSplitDialogComponent,
-  BillSplitDialogData
-} from '../bill-split-dialog/bill-split-dialog.component';
-import { ROUTE_BILL_ENTRY } from './../../app-routing.module';
+import { ROUTE_BILL_ENTRY, ROUTE_BILL_SPLIT } from './../../app-routing.module';
 
 @Component({
   selector: 'bsplit-bill-overview',
@@ -82,19 +78,8 @@ export class BillOverviewComponent implements OnInit {
   }
 
   onClickSplitBill(): void {
-    const data: BillSplitDialogData = {
-      billEntries: this.billService.getBill(),
-      tipValue: this.currentTipValue,
-    };
-    const dialogRef = this.matDialog.open<
-      BillSplitDialogComponent,
-      BillSplitDialogData
-    >(BillSplitDialogComponent, { data });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.changeDetectorRef.markForCheck();
-      }
+    this.router.navigate([ROUTE_BILL_SPLIT], {
+      queryParams: { tipValue: this.currentTipValue },
     });
   }
 
@@ -123,6 +108,9 @@ export class BillOverviewComponent implements OnInit {
   }
 
   gotoBillEntry(billEntryToEdit: BillEntry | null): void {
-    this.router.navigate([ROUTE_BILL_ENTRY], billEntryToEdit ? {queryParams: {id: billEntryToEdit.id}} : undefined);
+    this.router.navigate(
+      [ROUTE_BILL_ENTRY],
+      billEntryToEdit ? { queryParams: { id: billEntryToEdit.id } } : undefined
+    );
   }
 }

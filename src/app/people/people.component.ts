@@ -18,12 +18,10 @@ import { PersonGroup } from '../model/person-group.model';
 export class PeopleComponent implements OnInit {
   @Input() friendIds: string[] = [];
   @Input() selected = false;
-  @Input() iconOnly = false;
   @Output() clickButton: EventEmitter<void>;
 
   personGroup: PersonGroup;
   friendsInitials: string = '';
-  friendNames: string = '';
 
   constructor(private friendService: FriendService) {
     this.clickButton = new EventEmitter();
@@ -40,7 +38,6 @@ export class PeopleComponent implements OnInit {
     this.friendsInitials = friends
       .map((f, index) => f.initials ?? index + 1)
       .join(', ');
-    this.friendNames = friends.map((f) => f.name).join(', ');
   }
 
   onClickButton(): void {
