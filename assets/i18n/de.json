@@ -7,7 +7,8 @@
     "OK": "OK",
     "NEW": "Neu",
     "NAME": "Name",
-    "DELETE": "Löschen"
+    "DELETE": "Löschen",
+    "REMOVE": "Entfernen"
   },
   "HEADER": {
     "NEW_BILL": "Neue Rechnung"
@@ -22,6 +23,13 @@
     "THEME": {
       "LABEL": "Darstellung",
       "DARK_THEME": "Dunkler Modus"
+    },
+    "PAYERS": {
+      "HEADLINE": "Freunde",
+      "NAME": "Name",
+      "COLOR": "Farbe",
+      "YOU": "Du",
+      "INITIALS": "Initialien"
     }
   },
   "BILL": {
