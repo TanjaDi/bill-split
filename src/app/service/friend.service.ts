@@ -1,6 +1,6 @@
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
 import { Color } from 'src/app/model/color.model';
 import { Friend } from 'src/app/model/friend.model';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,8 +10,8 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root',
 })
 export class FriendService {
-  friends: Friend[];
-  private subscription: Subscription;
+  initFinished$: Subject<boolean> = new Subject();
+  friends: Friend[] = [];
   readonly COLORS: Color[] = [
     { name: 'red', value: '#c21943' },
     { name: 'green', value: '#3cb44b' },
@@ -25,8 +25,10 @@ export class FriendService {
     private translateService: TranslateService,
     private localStorageService: LocalStorageService
   ) {
-    this.subscription = new Subscription();
-    this.friends = this.initFriends();
+    this.translateService.get('SETTINGS.PAYERS.YOU').subscribe(() => {
+      this.friends = this.initFriends();
+      this.initFinished$.next(true);
+    });
   }
 
   createNewFriend(name: string, color?: Color): Friend {
@@ -72,10 +74,10 @@ export class FriendService {
       friends = JSON.parse(friendsFromLocalStorage);
     }
     if (friends.length === 0) {
-      const firstPerson = this.createNewFriend(
-        this.translateService.instant('SETTINGS.PAYERS.YOU'),
-        this.COLORS[0]
+      const youInitialValue = this.translateService.instant(
+        'SETTINGS.PAYERS.YOU'
       );
+      const firstPerson = this.createNewFriend(youInitialValue, this.COLORS[0]);
       friends.push(firstPerson);
     }
     return friends;

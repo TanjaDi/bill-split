@@ -1,0 +1,16 @@
+:host {
+  mat-toolbar-row {
+    justify-content: space-between;
+    height: 2rem;
+
+    &.type-warn {
+      background-color: orange;
+      color: black;
+    }
+
+    &.type-error {
+      background-color: #ff6600;
+      color: black;
+    }
+  }
+}

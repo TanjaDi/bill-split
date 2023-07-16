@@ -1,0 +1,14 @@
+<ng-container *ngIf="notificationText !== null">
+  <mat-toolbar-row [class]="'type-' + notificationType">
+    <span >{{ notificationText }}</span>
+    <span class="spacer"></span>
+    <button
+      *ngIf="closable"
+      (click)="notificationText = null"
+      mat-icon-button
+      aria-label="Close notification"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</ng-container>

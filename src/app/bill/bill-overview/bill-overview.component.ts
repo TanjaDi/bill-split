@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { filter, Observable, Subscription, tap } from 'rxjs';
 import {
   EditTipDialogComponent,
   EditTipDialogData,
@@ -15,8 +15,13 @@ import { BillEntry } from 'src/app/model/billl-entry.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { CalculateService } from 'src/app/service/calculate.service';
+import { FriendService } from 'src/app/service/friend.service';
 import { SettingsService } from 'src/app/service/settings.service';
-import { ROUTE_BILL_ENTRY, ROUTE_BILL_SPLIT } from './../../app-routing.module';
+import {
+  ROUTE_BILL_ENTRY,
+  ROUTE_BILL_SPLIT,
+  ROUTE_SETTINGS,
+} from './../../app-routing.module';
 
 @Component({
   selector: 'bsplit-bill-overview',
@@ -40,6 +45,7 @@ export class BillOverviewComponent implements OnInit {
     private billService: BillService,
     private settingsService: SettingsService,
     private calculateService: CalculateService,
+    private friendService: FriendService,
     private matDialog: MatDialog,
     private changeDetectorRef: ChangeDetectorRef
   ) {
@@ -71,7 +77,18 @@ export class BillOverviewComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.friendService.initFinished$
+      .pipe(
+        filter((init) => init),
+        tap(() => {
+          if (this.friendService.getFriends().length === 0) {
+            this.router.navigate([ROUTE_SETTINGS]);
+          }
+        })
+      )
+      .subscribe();
+  }
 
   onClickAddEntry(): void {
     this.gotoBillEntry(null);

@@ -27,6 +27,9 @@
       "COLOR": "Color",
       "YOU": "You",
       "INITIALS": "Initials"
+    },
+    "ERROR": {
+      "NAME_NOT_SET": "Please enter a name for your friend."
     }
   },
   "BILL": {

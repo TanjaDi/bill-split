@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/notification.service';
 import { FriendService } from 'src/app/service/friend.service';
 import { SettingsService } from 'src/app/service/settings.service';
 import { ThemeService } from 'src/app/service/theme.service';
@@ -21,6 +22,7 @@ export class SettingsComponent implements OnDestroy {
 
   constructor(
     private translateService: TranslateService,
+    private notificationService: NotificationService,
     public friendService: FriendService,
     public settingsService: SettingsService,
     private themeService: ThemeService
@@ -30,6 +32,26 @@ export class SettingsComponent implements OnDestroy {
     );
     this.subscriptions.push(subscription);
     this.isDarkTheme$ = this.themeService.isDarkTheme$;
+  }
+
+  mayLeave(): boolean {
+    const mayLeave = this.friendService.friends.every((f) => f.name);
+    if (!mayLeave) {
+      this.subscriptions.push(
+        this.translateService
+          .get('SETTINGS.ERROR.NAME_NOT_SET')
+          .subscribe((nameNotSet) => {
+            this.notificationService.showError(
+              nameNotSet,
+              true,
+              10
+            );
+          })
+      );
+    } else {
+      this.notificationService.clear();
+    }
+    return mayLeave;
   }
 
   ngOnDestroy() {
@@ -50,6 +72,10 @@ export class SettingsComponent implements OnDestroy {
   onClickAddFriend(): void {
     const newFriend = this.friendService.createNewFriend('');
     this.friendService.friends.push(newFriend);
+  }
+
+  onChangeFriendName(_event: any): void {
+    this.mayLeave();
   }
 
   onClickRemove(index: number): void {

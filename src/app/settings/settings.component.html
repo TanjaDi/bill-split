@@ -2,6 +2,7 @@
   context="settings"
   [headline]="'SETTINGS.HEADLINE' | translate"
 ></bsplit-header>
+<bsplit-notification-bar></bsplit-notification-bar>
 <div class="content">
   <div class="settings">
     <section class="theme">
@@ -41,6 +42,7 @@
                   matInput
                   required
                   [(ngModel)]="friendService.friends[index].name"
+                  (ngModelChange)="onChangeFriendName($event)"
                 />
               </mat-form-field>
             </td>

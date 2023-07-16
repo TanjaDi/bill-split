@@ -16,8 +16,11 @@ export class BillService {
     private localStorageService: LocalStorageService,
     private friendService: FriendService
   ) {
-    const bill = this.loadBillFromLocalStorage();
-    this.bill$ = new BehaviorSubject<BillEntry[]>(bill);
+    this.bill$ = new BehaviorSubject<BillEntry[]>([]);
+    this.friendService.initFinished$.subscribe(() => {
+      const bill = this.loadBillFromLocalStorage();
+      this.bill$.next(bill);
+    });
   }
 
   getBill(): BillEntry[] {

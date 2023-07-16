@@ -27,6 +27,7 @@ import { EditTipDialogComponent } from './edit-tip-dialog/edit-tip-dialog.compon
 import { HeaderComponent } from './header/header.component';
 import { PeopleComponent } from './people/people.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NotificationBarComponent } from './notification-bar/notification-bar.component';
 
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -44,6 +45,7 @@ registerLocaleData(localeEn, 'en');
     SettingsComponent,
     BillEntryComponent,
     BillSplitComponent,
+    NotificationBarComponent,
   ],
   imports: [
     BrowserModule,

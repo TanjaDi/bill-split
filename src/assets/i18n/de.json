@@ -30,6 +30,9 @@
       "COLOR": "Farbe",
       "YOU": "Du",
       "INITIALS": "Initialien"
+    },
+    "ERROR": {
+      "NAME_NOT_SET": "Bitte einen Namen für deinen Freund vergeben."
     }
   },
   "BILL": {
