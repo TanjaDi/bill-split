@@ -6,14 +6,14 @@ $primary: mat-palette($mat-indigo);
 $warn: mat-palette($mat-orange);
 
 .light-theme {
-  $accent: mat-palette($mat-indigo, A200, A100, A400);
+  $accent: mat-palette($mat-pink, A200, A100, A400);
   $theme: mat-light-theme($primary, $accent, $warn);
   @include angular-material-theme($theme);
 }
 
 .dark-theme {
   color: $light-primary-text;
-  $dark-accent: mat-palette($mat-indigo, A400, A100, A700);
+  $dark-accent: mat-palette($mat-pink, A400, A100, A700);
   $dark-theme: mat-dark-theme($primary, $dark-accent, $warn);
 
   @include angular-material-theme($dark-theme);

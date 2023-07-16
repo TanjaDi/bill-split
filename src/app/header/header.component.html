@@ -22,16 +22,17 @@
   <span class="spacer"></span>
   <button
     *ngIf="['bill-entry'].includes(context)"
-    mat-icon-button
+    mat-mini-fab
     class="saveButton"
     aria-label="Save"
+    color="accent"
     (click)="onClickSaveButton()"
   >
     <mat-icon>save</mat-icon>
   </button>
   <button
     *ngIf="'bill-split' === context"
-    mat-icon-button
+    mat-mini-fab
     class="shareButton"
     aria-label="Share"
     (click)="onClickShareButton()"
