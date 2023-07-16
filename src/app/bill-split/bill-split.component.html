@@ -9,36 +9,38 @@
     <div class="selectPayer">
       <ng-container *ngFor="let debtor of debtors">
         <bsplit-people
-          [friendIds]="[debtor.friendId]"
-          [selected]="payer === debtor.friendId"
-          (clickButton)="onClickPayer(debtor.friendId)"
+          [personIds]="[debtor.personId]"
+          [selected]="payer === debtor.personId"
+          (clickButton)="onClickPayer(debtor.personId)"
         >
         </bsplit-people>
       </ng-container>
     </div>
     <div class="results">
       <ng-container *ngFor="let debtor of debtors">
-        <ng-container *ngIf="debtor.friendId !== payer">
+        <ng-container *ngIf="debtor.personId !== payer">
           <div class="billForOne">
             <h3>
               {{ "BILL.BILL_FOR" | translate }}
-              {{ getFriendName(debtor.friendId) }}:
+              {{ getPersonName(debtor.personId) }}:
             </h3>
             <div class="entryForOne" *ngFor="let entry of debtor.entries">
               <span>{{ entry.name }}</span>
               <span>{{
-                entry.splitPrice | currency: settingsService.currency
+                entry.splitPrice | currency : settingsService.currency
               }}</span>
             </div>
             <div class="entryForOne">
               <span>{{ "GENERAL.TIP" | translate }}</span>
-              <span>{{ debtor.tip | currency: settingsService.currency }}</span>
+              <span>{{
+                debtor.tip | currency : settingsService.currency
+              }}</span>
             </div>
-            <h4 class="summaryForOne" *ngIf="debtor.friendId !== payer">
-              {{ getFriendName(payer) }}
+            <h4 class="summaryForOne" *ngIf="debtor.personId !== payer">
+              {{ getPersonName(payer) }}
               {{ "BILL.RECEIVES" | translate }}
-              {{ getFriendName(debtor.friendId) }}
-              {{ debtor.amount | currency: settingsService.currency }}.
+              {{ getPersonName(debtor.personId) }}
+              {{ debtor.amount | currency : settingsService.currency }}.
             </h4>
           </div>
         </ng-container>

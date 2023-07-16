@@ -7,11 +7,11 @@
         {{ entry.name }}
       </div>
       <div class="tableCell price">
-        {{ entry.price | currency: entry.currency }}
+        {{ entry.price | currency : entry.currency }}
       </div>
       <bsplit-people
         class="tableCell lastCell"
-        [friendIds]="entry.debtors.getFriendIds()"
+        [personIds]="entry.debtors.getPersonIds()"
         (clickButton)="gotoBillEntry(entry)"
       ></bsplit-people>
     </div>
@@ -45,7 +45,7 @@
       <div class="tableRow totalRow">
         <div class="tableCell name">{{ "GENERAL.TOTAL" | translate }}</div>
         <div class="tableCell price total">
-          {{ total | currency: currency }}
+          {{ total | currency : currency }}
         </div>
         <div class="tableCell lastCell"></div>
       </div>
@@ -54,12 +54,12 @@
         <div class="tableCell name">
           {{ "GENERAL.TOTAL_WITH_TIP" | translate }}
           <span
-            >{{ currentTipPercent | number: "1.0-0" }}% =
-            {{ currentTipValue | currency: currency }}
+            >{{ currentTipPercent | number : "1.0-0" }}% =
+            {{ currentTipValue | currency : currency }}
           </span>
         </div>
         <div class="tableCell price tip">
-          {{ total + currentTipValue | currency: currency }}
+          {{ total + currentTipValue | currency : currency }}
         </div>
         <div class="tableCell lastCell">
           <button

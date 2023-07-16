@@ -1,17 +1,17 @@
-import { BehaviorSubject, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 import { Color } from 'src/app/model/color.model';
-import { Friend } from 'src/app/model/friend.model';
+import { Person } from 'src/app/model/person.model';
 import { v4 as uuidv4 } from 'uuid';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FriendService {
+export class PersonService {
   initFinished$: Subject<boolean> = new Subject();
-  friends: Friend[] = [];
+  persons: Person[] = [];
   readonly COLORS: Color[] = [
     { name: 'red', value: '#c21943' },
     { name: 'green', value: '#3cb44b' },
@@ -26,66 +26,66 @@ export class FriendService {
     private localStorageService: LocalStorageService
   ) {
     this.translateService.get('SETTINGS.PAYERS.YOU').subscribe(() => {
-      this.friends = this.initFriends();
+      this.persons = this.init();
       this.initFinished$.next(true);
     });
   }
 
-  createNewFriend(name: string, color?: Color): Friend {
+  createNewPerson(name: string, color?: Color): Person {
     if (!color) {
-      const lastFriendColor =
-        this.friends.length > 0
-          ? this.friends[this.friends.length - 1]?.color
+      const lastPersonColor =
+        this.persons.length > 0
+          ? this.persons[this.persons.length - 1]?.color
           : this.COLORS[0];
-      const lastFriendColorIndex = this.COLORS.findIndex(
-        (color) => color.name === lastFriendColor.name
+      const lastPersonColorIndex = this.COLORS.findIndex(
+        (color) => color.name === lastPersonColor.name
       );
       const maxColorIndex = this.COLORS.length - 1;
-      const newColorIndex = (lastFriendColorIndex + 1) % maxColorIndex;
+      const newColorIndex = (lastPersonColorIndex + 1) % maxColorIndex;
       color = this.COLORS[newColorIndex];
     }
-    const newFriend: Friend = {
+    const newPerson: Person = {
       id: uuidv4(),
       name,
       initials: null,
       color,
     };
-    return newFriend;
+    return newPerson;
   }
 
-  getFriends(): Friend[] {
-    return this.friends;
+  getPersons(): Person[] {
+    return this.persons;
   }
 
-  saveFriends(): void {
+  savePersons(): void {
     this.updateInitials();
     this.localStorageService.setItem(
-      LocalStorageService.SETTINGS_FRIENDS,
-      JSON.stringify(this.friends)
+      LocalStorageService.SETTINGS_PERSONS,
+      JSON.stringify(this.persons)
     );
   }
 
-  private initFriends(): Friend[] {
-    const friendsFromLocalStorage = this.localStorageService.getItem(
-      LocalStorageService.SETTINGS_FRIENDS
+  private init(): Person[] {
+    const personsFromLocalStorage = this.localStorageService.getItem(
+      LocalStorageService.SETTINGS_PERSONS
     );
-    let friends: Friend[] = [];
-    if (friendsFromLocalStorage !== null) {
-      friends = JSON.parse(friendsFromLocalStorage);
+    let persons: Person[] = [];
+    if (personsFromLocalStorage !== null) {
+      persons = JSON.parse(personsFromLocalStorage);
     }
-    if (friends.length === 0) {
+    if (persons.length === 0) {
       const youInitialValue = this.translateService.instant(
         'SETTINGS.PAYERS.YOU'
       );
-      const firstPerson = this.createNewFriend(youInitialValue, this.COLORS[0]);
-      friends.push(firstPerson);
+      const firstPerson = this.createNewPerson(youInitialValue, this.COLORS[0]);
+      persons.push(firstPerson);
     }
-    return friends;
+    return persons;
   }
 
   private updateInitials() {
-    this.friends.forEach((friend, index) => {
-      friend.initials = this.getInitials(friend.name) ?? index + 1 + '';
+    this.persons.forEach((person, index) => {
+      person.initials = this.getInitials(person.name) ?? index + 1 + '';
     });
   }
 

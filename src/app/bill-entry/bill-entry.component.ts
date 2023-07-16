@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ROUTE_BILL } from 'src/app/app-routing.module';
 import { BillEntry } from 'src/app/model/billl-entry.model';
-import { Friend } from 'src/app/model/friend.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
+import { Person } from 'src/app/model/person.model';
 import { BillService } from 'src/app/service/bill.service';
-import { FriendService } from 'src/app/service/friend.service';
+import { PersonService } from 'src/app/service/person.service';
 import { SettingsService } from 'src/app/service/settings.service';
 
 @Component({
@@ -18,13 +18,13 @@ import { SettingsService } from 'src/app/service/settings.service';
 export class BillEntryComponent implements OnInit {
   billEntry: BillEntry;
   readonly currencySymbol: string;
-  readonly friends: Friend[] = [];
+  readonly persons: Person[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
-    private friendService: FriendService,
+    private personService: PersonService,
     private billService: BillService,
     private translateService: TranslateService
   ) {
@@ -39,12 +39,12 @@ export class BillEntryComponent implements OnInit {
         if (foundEntry) {
           this.billEntry = {
             ...foundEntry,
-            debtors: new PersonGroup(foundEntry.debtors.getFriendIds()),
+            debtors: new PersonGroup(foundEntry.debtors.getPersonIds()),
           };
         }
       }
     });
-    this.friends = this.friendService.friends;
+    this.persons = this.personService.persons;
     this.currencySymbol = getCurrencySymbol(
       this.settingsService.currency,
       'narrow',
@@ -54,12 +54,12 @@ export class BillEntryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleSelected(friendId: string): void {
-    this.billEntry.debtors.toggleSelected(friendId);
+  toggleSelected(personId: string): void {
+    this.billEntry.debtors.toggleSelected(personId);
   }
 
-  isPersonSelected(friendId: string): boolean {
-    return this.billEntry.debtors.isFriendSelected(friendId);
+  isPersonSelected(personId: string): boolean {
+    return this.billEntry.debtors.isPersonSelected(personId);
   }
 
   onClickDelete(): void {

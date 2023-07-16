@@ -32,6 +32,12 @@
       section {
         padding: 0.5rem 0;
       }
+
+      .persons {
+        .removeButtonCell {
+          vertical-align: top;
+        }
+      }
     }
   }
 }

@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FriendService } from 'src/app/service/friend.service';
+import { PersonService } from 'src/app/service/person.service';
 import { PersonGroup } from '../model/person-group.model';
 
 @Component({
@@ -16,26 +16,26 @@ import { PersonGroup } from '../model/person-group.model';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PeopleComponent implements OnInit {
-  @Input() friendIds: string[] = [];
+  @Input() personIds: string[] = [];
   @Input() selected = false;
   @Output() clickButton: EventEmitter<void>;
 
   personGroup: PersonGroup;
-  friendsInitials: string = '';
+  personsInitials: string = '';
 
-  constructor(private friendService: FriendService) {
+  constructor(private personService: PersonService) {
     this.clickButton = new EventEmitter();
     this.personGroup = new PersonGroup(
-      this.friendService.friends.map((f) => f.id)
+      this.personService.persons.map((f) => f.id)
     );
   }
 
   ngOnInit(): void {
-    this.personGroup = new PersonGroup(this.friendIds);
-    const friends = this.friendIds.map(
-      (id) => this.friendService.friends.find((friend) => friend.id === id)!
+    this.personGroup = new PersonGroup(this.personIds);
+    const persons = this.personIds.map(
+      (id) => this.personService.persons.find((person) => person.id === id)!
     );
-    this.friendsInitials = friends
+    this.personsInitials = persons
       .map((f, index) => f.initials ?? index + 1)
       .join(', ');
   }
@@ -44,11 +44,11 @@ export class PeopleComponent implements OnInit {
     this.clickButton.emit();
   }
 
-  getFriendColor(friendIds: string[]): string {
-    if (friendIds.length === 1) {
+  getPersonColor(personIds: string[]): string {
+    if (personIds.length === 1) {
       const index =
-        this.friendService.friends.findIndex(
-          (friend) => friend.id === friendIds[0]
+        this.personService.persons.findIndex(
+          (person) => person.id === personIds[0]
         ) ?? 0;
       return 'color' + index;
     }

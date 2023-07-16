@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { FriendService } from 'src/app/service/friend.service';
+import { PersonService } from 'src/app/service/person.service';
 import { v4 as uuidv4 } from 'uuid';
 import { BillEntry } from '../model/billl-entry.model';
 import { PersonGroup } from '../model/person-group.model';
@@ -14,10 +14,10 @@ export class BillService {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private friendService: FriendService
+    private personService: PersonService
   ) {
     this.bill$ = new BehaviorSubject<BillEntry[]>([]);
-    this.friendService.initFinished$.subscribe(() => {
+    this.personService.initFinished$.subscribe(() => {
       const bill = this.loadBillFromLocalStorage();
       this.bill$.next(bill);
     });
@@ -26,7 +26,7 @@ export class BillService {
   getBill(): BillEntry[] {
     return this.bill$.getValue().map((entry) => {
       // call new to create class
-      entry.debtors = new PersonGroup(entry.debtors.friendIds);
+      entry.debtors = new PersonGroup(entry.debtors.personIds);
       return entry;
     });
   }
@@ -36,13 +36,13 @@ export class BillService {
   }
 
   createNewBillEntry(currency: 'EUR' | 'USD'): BillEntry {
-    const friendIds = this.friendService.friends.map((f) => f.id);
+    const personIds = this.personService.persons.map((f) => f.id);
     return {
       id: '',
       name: '',
       price: 0,
       currency: currency,
-      debtors: new PersonGroup([friendIds[0]]),
+      debtors: new PersonGroup([personIds[0]]),
     };
   }
 

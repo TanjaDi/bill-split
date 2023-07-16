@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { Debtor } from 'src/app/model/debtor.model';
-import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { CalculateService } from 'src/app/service/calculate.service';
-import { FriendService } from 'src/app/service/friend.service';
+import { PersonService } from 'src/app/service/person.service';
 import { SettingsService } from 'src/app/service/settings.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class BillSplitComponent implements OnInit {
     public settingsService: SettingsService,
     private calculateService: CalculateService,
     private billService: BillService,
-    private friendService: FriendService
+    private personService: PersonService
   ) {
     this.billEntries = this.billService.getBill();
     this.activatedRoute.queryParams.subscribe((queryParams) => {
@@ -36,14 +35,14 @@ export class BillSplitComponent implements OnInit {
     });
     this.payer = this.billEntries
       .find((first) => first)!
-      .debtors.getFriendIds()
+      .debtors.getPersonIds()
       .find((first) => first)!;
   }
 
   ngOnInit(): void {}
 
-  onClickPayer(friendId: string): void {
-    this.payer = friendId;
+  onClickPayer(personId: string): void {
+    this.payer = personId;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
       this.billEntries,
       this.tipValue
@@ -54,10 +53,10 @@ export class BillSplitComponent implements OnInit {
     // TODO
   }
 
-  getFriendName(friendId: string): string {
+  getPersonName(personId: string): string {
     return (
-      this.friendService.friends.find((friend) => friend.id === friendId)
-        ?.name ?? friendId
+      this.personService.persons.find((person) => person.id === personId)
+        ?.name ?? personId
     );
   }
 }

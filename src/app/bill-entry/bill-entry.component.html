@@ -35,7 +35,7 @@
           {{ "ERROR.REQUIRED" | translate }}
         </mat-error>
         <mat-error *ngIf="price.hasError('min')">
-          {{ "ERROR.PRICE_MIN" | translate: { min: 0 } }}
+          {{ "ERROR.PRICE_MIN" | translate : { min: 0 } }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -43,13 +43,11 @@
     <div>
       <h3>{{ "BILL.WHO_ORDERED" | translate }}</h3>
       <div class="debtorSelection">
-        <ng-container
-          *ngFor="let friend of friends"
-        >
+        <ng-container *ngFor="let person of persons">
           <bsplit-people
-            [friendIds]="[friend.id]"
-            [selected]="isPersonSelected(friend.id)"
-            (clickButton)="toggleSelected(friend.id)"
+            [personIds]="[person.id]"
+            [selected]="isPersonSelected(person.id)"
+            (clickButton)="toggleSelected(person.id)"
           >
           </bsplit-people>
         </ng-container>

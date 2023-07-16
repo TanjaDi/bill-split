@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { filter, Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription, filter, tap } from 'rxjs';
 import {
   EditTipDialogComponent,
   EditTipDialogData,
@@ -15,7 +15,7 @@ import { BillEntry } from 'src/app/model/billl-entry.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
 import { CalculateService } from 'src/app/service/calculate.service';
-import { FriendService } from 'src/app/service/friend.service';
+import { PersonService } from 'src/app/service/person.service';
 import { SettingsService } from 'src/app/service/settings.service';
 import {
   ROUTE_BILL_ENTRY,
@@ -45,7 +45,7 @@ export class BillOverviewComponent implements OnInit {
     private billService: BillService,
     private settingsService: SettingsService,
     private calculateService: CalculateService,
-    private friendService: FriendService,
+    private personService: PersonService,
     private matDialog: MatDialog,
     private changeDetectorRef: ChangeDetectorRef
   ) {
@@ -62,7 +62,7 @@ export class BillOverviewComponent implements OnInit {
 
   private onChangeBill(newBill: BillEntry[]) {
     newBill.forEach((entry) => {
-      entry.debtors = new PersonGroup(entry.debtors.friendIds);
+      entry.debtors = new PersonGroup(entry.debtors.personIds);
     });
     this.currency =
       newBill.find((a) => a)?.currency || this.settingsService.currency;
@@ -78,11 +78,11 @@ export class BillOverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.friendService.initFinished$
+    this.personService.initFinished$
       .pipe(
         filter((init) => init),
         tap(() => {
-          if (this.friendService.getFriends().length === 0) {
+          if (this.personService.getPersons().length < 2) {
             this.router.navigate([ROUTE_SETTINGS]);
           }
         })

@@ -1,21 +1,21 @@
 export class PersonGroup {
-  friendIds: string[];
+  personIds: string[];
 
-  constructor(friendIds: string[]) {
-    this.friendIds = friendIds;
+  constructor(personIds: string[]) {
+    this.personIds = personIds;
   }
 
-  getFriendIds(): string[] {
-    return this.friendIds;
+  getPersonIds(): string[] {
+    return this.personIds;
   }
 
   isOne(): boolean {
-    return this.friendIds.length === 1;
+    return this.personIds.length === 1;
   }
 
-  isFriendSelected(friendId: string): boolean {
-    const foundIndex = this.friendIds.findIndex(
-      (iFriend) => iFriend === friendId
+  isPersonSelected(personId: string): boolean {
+    const foundIndex = this.personIds.findIndex(
+      (iPerson) => iPerson === personId
     );
     if (foundIndex > -1) {
       return true;
@@ -23,18 +23,18 @@ export class PersonGroup {
     return false;
   }
 
-  toggleSelected(friendId: string): void {
-    const foundIndex = this.friendIds.findIndex(
-      (iFriend) => iFriend === friendId
+  toggleSelected(personId: string): void {
+    const foundIndex = this.personIds.findIndex(
+      (iPerson) => iPerson === personId
     );
     if (foundIndex > -1) {
       if (this.isOne() === false) {
         // only allow deselection if there is more than one debtor left
-        this.friendIds.splice(foundIndex, 1);
+        this.personIds.splice(foundIndex, 1);
       }
     } else {
-      this.friendIds.push(friendId);
-      this.friendIds.sort();
+      this.personIds.push(personId);
+      this.personIds.sort();
     }
   }
 }

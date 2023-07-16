@@ -30,23 +30,23 @@
       </mat-radio-group>
     </section>
 
-    <section class="payers">
+    <section class="persons">
       <h3>{{ "SETTINGS.PAYERS.HEADLINE" | translate }}</h3>
       <table>
         <tbody>
-          <tr *ngFor="let friend of friendService.friends; let index = index">
+          <tr *ngFor="let person of personService.persons; let index = index">
             <td>
               <mat-form-field>
                 <mat-label>{{ "SETTINGS.PAYERS.NAME" | translate }}</mat-label>
                 <input
                   matInput
                   required
-                  [(ngModel)]="friendService.friends[index].name"
-                  (ngModelChange)="onChangeFriendName($event)"
+                  [(ngModel)]="personService.persons[index].name"
+                  (ngModelChange)="onChangePersonName($event)"
                 />
               </mat-form-field>
             </td>
-            <td>
+            <td class="removeButtonCell">
               <button
                 *ngIf="index > 0"
                 class="removeButton"
@@ -64,7 +64,7 @@
                 class="addButton"
                 mat-flat-button
                 color="primary"
-                (click)="onClickAddFriend()"
+                (click)="onClickAddPerson()"
               >
                 <mat-icon>add</mat-icon>
                 {{ "GENERAL.NEW" | translate }}

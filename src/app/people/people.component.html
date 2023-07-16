@@ -1,9 +1,4 @@
-<div
-  [class]="
-    'person ' +
-    getFriendColor(personGroup.friendIds)
-  "
->
+<div [class]="'person ' + getPersonColor(personGroup.personIds)">
   <button
     class="peopleIndicator"
     [class.selected]="selected"
@@ -11,7 +6,7 @@
     aria-label="People"
     (click)="onClickButton()"
   >
-    {{ friendsInitials }}
+    {{ personsInitials }}
     <mat-icon>{{ personGroup.isOne() ? "person" : "people" }}</mat-icon>
   </button>
 </div>

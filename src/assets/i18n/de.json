@@ -25,14 +25,14 @@
       "DARK_THEME": "Dunkler Modus"
     },
     "PAYERS": {
-      "HEADLINE": "Freunde",
+      "HEADLINE": "Personen",
       "NAME": "Name",
       "COLOR": "Farbe",
       "YOU": "Du",
       "INITIALS": "Initialien"
     },
     "ERROR": {
-      "NAME_NOT_SET": "Bitte einen Namen für deinen Freund vergeben."
+      "NAME_NOT_SET": "Bitte einen Namen vergeben."
     }
   },
   "BILL": {

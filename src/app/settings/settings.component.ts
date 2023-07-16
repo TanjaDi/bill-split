@@ -3,7 +3,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/notification.service';
-import { FriendService } from 'src/app/service/friend.service';
+import { PersonService } from 'src/app/service/person.service';
 import { SettingsService } from 'src/app/service/settings.service';
 import { ThemeService } from 'src/app/service/theme.service';
 
@@ -23,7 +23,7 @@ export class SettingsComponent implements OnDestroy {
   constructor(
     private translateService: TranslateService,
     private notificationService: NotificationService,
-    public friendService: FriendService,
+    public personService: PersonService,
     public settingsService: SettingsService,
     private themeService: ThemeService
   ) {
@@ -35,17 +35,13 @@ export class SettingsComponent implements OnDestroy {
   }
 
   mayLeave(): boolean {
-    const mayLeave = this.friendService.friends.every((f) => f.name);
+    const mayLeave = this.personService.persons.every((f) => f.name);
     if (!mayLeave) {
       this.subscriptions.push(
         this.translateService
           .get('SETTINGS.ERROR.NAME_NOT_SET')
           .subscribe((nameNotSet) => {
-            this.notificationService.showError(
-              nameNotSet,
-              true,
-              10
-            );
+            this.notificationService.showError(nameNotSet, true, 10);
           })
       );
     } else {
@@ -55,7 +51,7 @@ export class SettingsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.friendService.saveFriends();
+    this.personService.savePersons();
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
@@ -69,19 +65,19 @@ export class SettingsComponent implements OnDestroy {
     this.themeService.setDarkTheme(isChecked);
   }
 
-  onClickAddFriend(): void {
-    const newFriend = this.friendService.createNewFriend('');
-    this.friendService.friends.push(newFriend);
+  onClickAddPerson(): void {
+    const newPerson = this.personService.createNewPerson('');
+    this.personService.persons.push(newPerson);
   }
 
-  onChangeFriendName(_event: any): void {
+  onChangePersonName(_event: any): void {
     this.mayLeave();
   }
 
   onClickRemove(index: number): void {
-    if (this.friendService.friends.length === 1) {
+    if (this.personService.persons.length === 1) {
       return;
     }
-    this.friendService.friends.splice(index, 1);
+    this.personService.persons.splice(index, 1);
   }
 }

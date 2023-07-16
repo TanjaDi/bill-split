@@ -22,14 +22,14 @@
       "DARK_THEME": "Dark theme"
     },
     "PAYERS": {
-      "HEADLINE": "Friends",
+      "HEADLINE": "Persons",
       "NAME": "Name",
       "COLOR": "Color",
       "YOU": "You",
       "INITIALS": "Initials"
     },
     "ERROR": {
-      "NAME_NOT_SET": "Please enter a name for your friend."
+      "NAME_NOT_SET": "Please enter a name."
     }
   },
   "BILL": {

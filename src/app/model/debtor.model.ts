@@ -1,5 +1,5 @@
 export interface Debtor {
-  friendId: string;
+  personId: string;
   amount: number;
   tip: number;
   entries: { name: string; splitPrice: number }[];
