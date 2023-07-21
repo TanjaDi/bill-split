@@ -9,7 +9,7 @@ import { BillService } from './../service/bill.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @Input() context: 'settings' | 'bill' | 'bill-entry' | 'bill-split' = 'bill';
+  @Input() context: 'settings' | 'bill' | 'bill-entry' | 'bill-split' | 'tip' = 'bill';
   @Input() headline: string = 'Headline';
   @Output() saveClick: EventEmitter<void>;
   @Output() shareClick: EventEmitter<void>;

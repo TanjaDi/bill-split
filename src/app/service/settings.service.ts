@@ -7,14 +7,14 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class SettingsService {
   static readonly MAX_NUMBER_OF_PAYERS = 8;
-  tipInPercent: number;
+  defaultTipInPercent: number;
   currency: 'EUR' | 'USD';
 
   constructor(
     private translateService: TranslateService,
     private localStorageService: LocalStorageService
   ) {
-    this.tipInPercent = 8;
+    this.defaultTipInPercent = 8;
     this.currency = 'EUR';
     this.initLanguage();
   }

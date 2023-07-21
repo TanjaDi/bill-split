@@ -57,6 +57,12 @@ export class PersonService {
     return this.persons;
   }
 
+  getPersonName(personId: string): string {
+    return (
+      this.persons.find((person) => person.id === personId)?.name ?? personId
+    );
+  }
+
   savePersons(): void {
     this.updateInitials();
     this.localStorageService.setItem(

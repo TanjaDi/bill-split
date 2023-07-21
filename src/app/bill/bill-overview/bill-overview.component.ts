@@ -1,16 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription, filter, tap } from 'rxjs';
-import {
-  EditTipDialogComponent,
-  EditTipDialogData,
-} from 'src/app/edit-tip-dialog/edit-tip-dialog.component';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { PersonGroup } from 'src/app/model/person-group.model';
 import { BillService } from 'src/app/service/bill.service';
@@ -20,6 +10,7 @@ import { SettingsService } from 'src/app/service/settings.service';
 import {
   ROUTE_BILL_ENTRY,
   ROUTE_BILL_SPLIT,
+  ROUTE_BILL_TIP,
   ROUTE_SETTINGS,
 } from './../../app-routing.module';
 
@@ -31,10 +22,6 @@ import {
 })
 export class BillOverviewComponent implements OnInit {
   bill$: Observable<BillEntry[]>;
-  total = 0;
-  currentTipValue: number;
-  currentTipPercent: number;
-  currency: 'EUR' | 'USD';
   readonly displayedColumns = ['name', 'price', 'edit'];
   readonly displayedColumnsForTipFooter = ['tip', 'tipAmount', 'calculateTip'];
 
@@ -43,16 +30,10 @@ export class BillOverviewComponent implements OnInit {
   constructor(
     private router: Router,
     private billService: BillService,
-    private settingsService: SettingsService,
-    private calculateService: CalculateService,
-    private personService: PersonService,
-    private matDialog: MatDialog,
-    private changeDetectorRef: ChangeDetectorRef
+    public settingsService: SettingsService,
+    public calculateService: CalculateService,
+    private personService: PersonService
   ) {
-    this.currentTipPercent = this.settingsService.tipInPercent;
-    this.currency = this.settingsService.currency;
-    this.currentTipValue = 0;
-
     this.bill$ = this.billService.getBill$().asObservable();
     const billChangesSubscription = this.billService
       .getBill$()
@@ -60,21 +41,13 @@ export class BillOverviewComponent implements OnInit {
     this.subscriptions.push(billChangesSubscription);
   }
 
-  private onChangeBill(newBill: BillEntry[]) {
+  private onChangeBill(newBill: BillEntry[]): void {
     newBill.forEach((entry) => {
       entry.debtors = new PersonGroup(entry.debtors.personIds);
     });
-    this.currency =
-      newBill.find((a) => a)?.currency || this.settingsService.currency;
-    this.total = this.calculateService.calculateTotal(newBill);
-    this.currentTipValue = this.calculateService.calculateRoundedTip(
-      this.total,
-      this.settingsService.tipInPercent
-    );
-    this.currentTipPercent = this.calculateService.calculateTipInPercent(
-      this.currentTipValue,
-      this.total
-    );
+    this.calculateService.updateTotal(newBill);
+    this.calculateService.updateTipValueToRoundedTip();
+    this.calculateService.updateTipInPercentUsingTipValueAndTotal();
   }
 
   ngOnInit(): void {
@@ -95,33 +68,11 @@ export class BillOverviewComponent implements OnInit {
   }
 
   onClickSplitBill(): void {
-    this.router.navigate([ROUTE_BILL_SPLIT], {
-      queryParams: { tipValue: this.currentTipValue },
-    });
+    this.router.navigate([ROUTE_BILL_SPLIT]);
   }
 
-  onClickEditTip(): void {
-    const data: EditTipDialogData = {
-      tipValue: this.currentTipValue,
-      total: this.total,
-      currency: this.currency,
-    };
-    const dialogRef = this.matDialog.open<
-      EditTipDialogComponent,
-      EditTipDialogData,
-      number | null
-    >(EditTipDialogComponent, { data });
-
-    dialogRef.afterClosed().subscribe((newTip) => {
-      if (newTip !== undefined && newTip !== null) {
-        this.currentTipValue = newTip;
-        this.currentTipPercent = this.calculateService.calculateTipInPercent(
-          this.currentTipValue,
-          this.total
-        );
-        this.changeDetectorRef.markForCheck();
-      }
-    });
+  gotoEditTip(): void {
+    this.router.navigate([ROUTE_BILL_TIP]);
   }
 
   gotoBillEntry(billEntryToEdit: BillEntry | null): void {

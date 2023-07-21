@@ -1,0 +1,39 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    display: flex;
+    justify-content: center;
+
+    .valuesWrapper {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      .sumLabel,
+      .tip {
+        font-weight: bold;
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .buttonWrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        width: 100%;
+        justify-content: space-around;
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<bsplit-header
+  context="tip"
+  [headline]="'BILL.TIP.CHANGE_TIP_DIALOG.TITLE' | translate"
+></bsplit-header>
+<main class="content">
+  <div class="valuesWrapper">
+    <div class="sumLabel">
+      <label>{{ "GENERAL.TOTAL" | translate }}:</label>
+      <label>{{ calculateService.currentTotal | currency : settingsService.currency }}</label>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "GENERAL.TOTAL_WITH_TIP" | translate }}</mat-label>
+      <input
+        #totalWithTipNgModel="ngModel"
+        matInput
+        [min]="calculateService.currentTotal"
+        required
+        cdkFocusInitial
+        type="number"
+        [ngModel]="calculateService.currentTotalWithTip"
+        (ngModelChange)="onEditSumWithTip($event)"
+      />
+      <span matSuffix>€</span>
+      <mat-error *ngIf="totalWithTipNgModel.hasError('required')">
+        {{ "ERROR.REQUIRED" | translate }}
+      </mat-error>
+      <mat-error *ngIf="totalWithTipNgModel.hasError('min')">
+        {{ "ERROR.VALUE_SHOULD_BE_HIGHER_THAN_TOTAL" | translate }}
+      </mat-error>
+    </mat-form-field>
+    <div class="buttonWrapper">
+      <button mat-flat-button color="accent" (click)="onClickSetTip(0)">
+        {{
+          "BILL.TIP.CHANGE_TIP_DIALOG.SET_TIP_TO_PERCENT"
+            | translate : { tipInPercent: 0 }
+        }}
+      </button>
+      <button
+        mat-flat-button
+        color="accent"
+        (click)="onClickRoundTip(settingsService.defaultTipInPercent)"
+      >
+        {{
+          "BILL.TIP.CHANGE_TIP_DIALOG.ROUND_TIP_TO_PERCENT"
+            | translate : { tipInPercent: settingsService.defaultTipInPercent }
+        }}
+      </button>
+      <button mat-flat-button color="accent" (click)="onClickRoundTip(10)">
+        {{
+          "BILL.TIP.CHANGE_TIP_DIALOG.ROUND_TIP_TO_PERCENT"
+            | translate : { tipInPercent: 10 }
+        }}
+      </button>
+      <button mat-flat-button color="accent" (click)="onClickRoundTip(20)">
+        {{
+          "BILL.TIP.CHANGE_TIP_DIALOG.ROUND_TIP_TO_PERCENT"
+            | translate : { tipInPercent: 20 }
+        }}
+      </button>
+    </div>
+    <div class="tip">
+      <label>{{ "GENERAL.TIP" | translate }}:</label>
+      <label>{{ calculateService.currentTipValue | currency : settingsService.currency }}</label>
+    </div>
+    <div class="tip">
+      <label>{{ "GENERAL.TIP_IN_PERCENT" | translate }}:</label>
+      <label>{{ calculateService.currentTipInPercent | number : "1.0-0" }}%</label>
+    </div>
+  </div>
+</main>

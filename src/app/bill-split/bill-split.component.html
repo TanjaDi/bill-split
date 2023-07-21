@@ -3,8 +3,8 @@
   [headline]="'BILL.SPLIT_BILL' | translate"
   (shareClick)="onShareClick()"
 ></bsplit-header>
-<div class="content">
-  <div class="billSplitWrapper">
+<main class="content">
+  <section class="billSplitWrapper">
     <h3>{{ "BILL.WHO_PAYS" | translate }}</h3>
     <div class="selectPayer">
       <ng-container *ngFor="let debtor of debtors">
@@ -46,5 +46,5 @@
         </ng-container>
       </ng-container>
     </div>
-  </div>
-</div>
+  </section>
+</main>

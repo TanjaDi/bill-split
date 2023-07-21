@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BillEntry } from 'src/app/model/billl-entry.model';
 import { Debtor } from 'src/app/model/debtor.model';
 import { BillService } from 'src/app/service/bill.service';
@@ -20,17 +21,17 @@ export class BillSplitComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private translateService: TranslateService,
     public settingsService: SettingsService,
     private calculateService: CalculateService,
     private billService: BillService,
     private personService: PersonService
   ) {
     this.billEntries = this.billService.getBill();
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
-      this.tipValue = queryParams.tipValue;
+    this.activatedRoute.queryParams.subscribe(() => {
+      this.tipValue = this.calculateService.currentTipValue;
       this.debtors = this.calculateService.calculateDebtorsForPayer(
-        this.billEntries,
-        this.tipValue
+        this.billEntries
       );
     });
     this.payer = this.billEntries
@@ -44,19 +45,55 @@ export class BillSplitComponent implements OnInit {
   onClickPayer(personId: string): void {
     this.payer = personId;
     this.debtors = this.calculateService.calculateDebtorsForPayer(
-      this.billEntries,
-      this.tipValue
+      this.billEntries
     );
   }
 
   onShareClick(): void {
-    // TODO
+    const introAndTotal =
+      'Our bill - ' +
+      this.getPersonName(this.payer) +
+      ' paid this time!\n\n' +
+      'TOTAL (including tip): ' +
+      this.calculateService.currentTotalWithTip +
+      '\n';
+
+    const table = this.debtors
+      .map((debtor) => {
+        return (
+          this.getPersonName(debtor.personId) +
+          '\n' +
+          debtor.entries
+            .map((entry) => {
+              return '   ' + entry.name + '\t\t' + entry.splitPrice;
+            })
+            .join('\n') +
+          '\n' +
+          'SUM: ' +
+          debtor.amount +
+          '\n'
+        );
+      })
+      .join('\n');
+    const text = introAndTotal + table;
+    console.log(text);
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'BillSplit - Split your bills with ease!',
+          text,
+        })
+        .then(() => {
+          console.log('Thanks for sharing!');
+        })
+        .catch(console.error);
+    } else {
+      // fallback
+    }
   }
 
   getPersonName(personId: string): string {
-    return (
-      this.personService.persons.find((person) => person.id === personId)
-        ?.name ?? personId
-    );
+    return this.personService.getPersonName(personId);
   }
 }

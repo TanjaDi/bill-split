@@ -45,7 +45,9 @@
       <div class="tableRow totalRow">
         <div class="tableCell name">{{ "GENERAL.TOTAL" | translate }}</div>
         <div class="tableCell price total">
-          {{ total | currency : currency }}
+          {{
+            calculateService.currentTotal | currency : settingsService.currency
+          }}
         </div>
         <div class="tableCell lastCell"></div>
       </div>
@@ -54,19 +56,25 @@
         <div class="tableCell name">
           {{ "GENERAL.TOTAL_WITH_TIP" | translate }}
           <span
-            >{{ currentTipPercent | number : "1.0-0" }}% =
-            {{ currentTipValue | currency : currency }}
+            >{{ calculateService.currentTipInPercent | number : "1.0-0" }}% =
+            {{
+              calculateService.currentTipValue
+                | currency : settingsService.currency
+            }}
           </span>
         </div>
         <div class="tableCell price tip">
-          {{ total + currentTipValue | currency : currency }}
+          {{
+            calculateService.currentTotal + calculateService.currentTipValue
+              | currency : settingsService.currency
+          }}
         </div>
         <div class="tableCell lastCell">
           <button
             class="splitButton"
             mat-flat-button
             color="primary"
-            (click)="onClickEditTip()"
+            (click)="gotoEditTip()"
           >
             <mat-icon>edit</mat-icon>
           </button>

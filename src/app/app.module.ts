@@ -23,11 +23,11 @@ import { AppComponent } from './app.component';
 import { BillEntryComponent } from './bill-entry/bill-entry.component';
 import { BillSplitComponent } from './bill-split/bill-split.component';
 import { BillOverviewComponent } from './bill/bill-overview/bill-overview.component';
-import { EditTipDialogComponent } from './edit-tip-dialog/edit-tip-dialog.component';
+import { EditTipComponent } from './edit-tip/edit-tip.component';
 import { HeaderComponent } from './header/header.component';
+import { NotificationBarComponent } from './notification-bar/notification-bar.component';
 import { PeopleComponent } from './people/people.component';
 import { SettingsComponent } from './settings/settings.component';
-import { NotificationBarComponent } from './notification-bar/notification-bar.component';
 
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,7 +41,7 @@ registerLocaleData(localeEn, 'en');
     BillOverviewComponent,
     HeaderComponent,
     PeopleComponent,
-    EditTipDialogComponent,
+    EditTipComponent,
     SettingsComponent,
     BillEntryComponent,
     BillSplitComponent,
